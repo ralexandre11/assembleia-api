@@ -1,9 +1,9 @@
-package com.ribeiro.assembleiaapi.model.Service.impl;
+package com.ribeiro.assembleiaapi.Service.impl;
 
 import java.util.List;
 import java.util.Optional;
 
-import com.ribeiro.assembleiaapi.model.Service.VoteService;
+import com.ribeiro.assembleiaapi.Service.VoteService;
 import com.ribeiro.assembleiaapi.model.entity.Vote;
 
 public class VoteServiceImpl implements VoteService {

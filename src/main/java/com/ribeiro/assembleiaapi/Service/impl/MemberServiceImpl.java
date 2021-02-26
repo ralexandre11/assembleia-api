@@ -1,42 +1,42 @@
-package com.ribeiro.assembleiaapi.model.Service.impl;
+package com.ribeiro.assembleiaapi.Service.impl;
 
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.ribeiro.assembleiaapi.model.Service.AgendaService;
-import com.ribeiro.assembleiaapi.model.entity.Agenda;
+import com.ribeiro.assembleiaapi.Service.MemberService;
+import com.ribeiro.assembleiaapi.model.entity.Member;
 
 @Service
-public class AgendaServiceImpl implements AgendaService{
+public class MemberServiceImpl implements MemberService {
 
 	@Override
-	public Agenda save(Agenda agenda) {
+	public Member save(Member member) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Agenda update(Agenda agenda) {
+	public Member update(Member member) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void delete(Agenda agenda) {
+	public void delete(Member member) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public List<Agenda> all() {
+	public List<Member> all() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<Agenda> getByID(Long id) {
+	public Optional<Member> getByID(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
