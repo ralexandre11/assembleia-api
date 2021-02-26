@@ -37,7 +37,7 @@ public class Vote implements Serializable {
 	private Long id;
 	
 	@NotNull
-	@Column(name = "id_vote")
+	@Column(name = "vote_value")
 	private VoteValue voteValue;
 	
 	@NotNull

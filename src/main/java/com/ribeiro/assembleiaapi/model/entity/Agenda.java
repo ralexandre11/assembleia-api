@@ -49,5 +49,4 @@ public class Agenda implements Serializable {
 	@JoinColumn(name = "id_agenda")
 	private List<Vote> votes = new ArrayList<>();
 
-
 }
