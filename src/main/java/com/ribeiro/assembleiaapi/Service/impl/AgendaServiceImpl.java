@@ -25,6 +25,7 @@ public class AgendaServiceImpl implements AgendaService{
 		if (agenda.getExpiration() == null) {
 			agenda.setExpiration(oneMinuteExpiration());
 		}
+		
 		Agenda agendaSaved = agendaRepository.save(agenda);
 		return AgendaMapper.toDTO(agendaSaved);
 	}
