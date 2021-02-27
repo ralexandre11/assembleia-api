@@ -5,12 +5,21 @@ import com.ribeiro.assembleiaapi.model.entity.Agenda;
 
 public class AgendaMapper {
 
-	public static Agenda fromDTO(AgendaDTO agenda) {
-		return new Agenda();
+	public static Agenda fromDTO(AgendaDTO agendaDTO) {
+		Agenda agenda = new Agenda();
+		agenda.setDescription(agendaDTO.getDescription());
+		agenda.setExpiration(agendaDTO.getExpiration());
+		return agenda;
 	}
 	
 	public static AgendaDTO toDTO(Agenda agenda) {
-		return new AgendaDTO();
+		AgendaDTO dto = new AgendaDTO();
+		dto.setId(agenda.getId());
+		dto.setDescription(agenda.getDescription());
+		dto.setExpiration(agenda.getExpiration());
+		return dto;
 	}
 	
 }
+
+
