@@ -1,6 +1,5 @@
 package com.ribeiro.assembleiaapi.resource;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,12 +10,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ribeiro.assembleiaapi.Service.impl.AgendaServiceImpl;
 import com.ribeiro.assembleiaapi.model.dto.AgendaDTO;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
 @RequestMapping("/agenda")
+@RequiredArgsConstructor
 public class AgendaController {
 	
-	@Autowired
-	private AgendaServiceImpl service;
+	private final AgendaServiceImpl service;
 	
 //	@GetMapping
 //	public ResponseEntity<List<AgendaDTO>> all() {
