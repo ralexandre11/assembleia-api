@@ -1,7 +1,6 @@
 package com.ribeiro.assembleiaapi.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.ribeiro.assembleiaapi.model.dto.AgendaDTO;
 import com.ribeiro.assembleiaapi.model.entity.Agenda;
@@ -10,12 +9,12 @@ public interface AgendaService {
 
 	AgendaDTO save(AgendaDTO dto);
 	
-	Agenda update(Agenda agenda);
+	AgendaDTO update(Long id, AgendaDTO dto);
 	
 	void delete(Agenda agenda);
 	
-	List<Agenda> all();
+	List<AgendaDTO> getAll();
 	
-	Optional<Agenda> getByID(Long id);
+	Agenda getById(Long id);
 	
 }
