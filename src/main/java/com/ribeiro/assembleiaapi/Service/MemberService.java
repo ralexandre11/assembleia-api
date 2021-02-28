@@ -1,20 +1,18 @@
 package com.ribeiro.assembleiaapi.Service;
 
 import java.util.List;
-import java.util.Optional;
 
+import com.ribeiro.assembleiaapi.model.dto.MemberDTO;
 import com.ribeiro.assembleiaapi.model.entity.Member;
 
 public interface MemberService {
 
-	Member save(Member member);
+	MemberDTO save(MemberDTO dto);
 	
-	Member update(Member member);
+	MemberDTO update(Long id, MemberDTO dto);
 	
-	void delete(Member member);
+	List<MemberDTO> getAll();
 	
-	List<Member> all();
-	
-	Optional<Member> getByID(Long id);
+	Member getById(Long id);
 	
 }

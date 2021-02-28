@@ -29,11 +29,6 @@ public class AgendaController {
 		return ResponseEntity.status(HttpStatus.OK).body(service.getAll());
 	}
 
-//	@PostMapping
-//	public ResponseEntity<AgendaDTO> createDiscipline(@RequestBody Discipline discipline) {
-//		return ResponseEntity.status(HttpStatus.CREATED).body(service.save(discipline));
-//	}
-
 	@PostMapping
 	public ResponseEntity<String> createAgenda(@RequestBody AgendaDTO dto) {
 		service.save(dto);

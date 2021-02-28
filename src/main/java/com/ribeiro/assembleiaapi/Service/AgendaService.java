@@ -11,8 +11,6 @@ public interface AgendaService {
 	
 	AgendaDTO update(Long id, AgendaDTO dto);
 	
-	void delete(Agenda agenda);
-	
 	List<AgendaDTO> getAll();
 	
 	Agenda getById(Long id);

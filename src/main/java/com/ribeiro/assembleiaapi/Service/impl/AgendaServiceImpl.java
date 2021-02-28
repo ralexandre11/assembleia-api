@@ -55,11 +55,6 @@ public class AgendaServiceImpl implements AgendaService {
 	}
 	
 	@Override
-	public void delete(Agenda agenda) {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
 	public List<AgendaDTO> getAll() {
 		try {
 			List<Agenda> agendas =  agendaRepository.findAll();
