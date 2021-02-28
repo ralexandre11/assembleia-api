@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ribeiro.assembleiaapi.Service.impl.AgendaServiceImpl;
 import com.ribeiro.assembleiaapi.model.dto.AgendaDTO;
+import com.ribeiro.assembleiaapi.resource.dto.ResponseDTO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -30,15 +31,17 @@ public class AgendaController {
 	}
 
 	@PostMapping
-	public ResponseEntity<String> createAgenda(@RequestBody AgendaDTO dto) {
-		service.save(dto);
-		return ResponseEntity.status(HttpStatus.CREATED).body("Created Agenda!");
+	public ResponseEntity<ResponseDTO> createAgenda(@RequestBody AgendaDTO dto) {
+		AgendaDTO dtoSaved = service.save(dto);
+		ResponseDTO response = new ResponseDTO("Created Agenda! ID: " + dtoSaved.getId());
+		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<AgendaDTO> openSessionAgenda(@PathVariable("id") Long id, @RequestBody AgendaDTO dto) {
+	public ResponseEntity<ResponseDTO> openSessionAgenda(@PathVariable("id") Long id, @RequestBody AgendaDTO dto) {
 		AgendaDTO dtoSaved = service.update(id, dto);
-		return ResponseEntity.status(HttpStatus.OK).body(dtoSaved);
+		ResponseDTO response = new ResponseDTO("Opened Session! ID: " + dtoSaved.getId());
+		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 
 }
