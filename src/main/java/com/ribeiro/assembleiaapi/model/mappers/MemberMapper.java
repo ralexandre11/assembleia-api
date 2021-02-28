@@ -10,12 +10,19 @@ import com.ribeiro.assembleiaapi.model.entity.Member;
 
 public class MemberMapper {
 
-	public static Member fromDTO(MemberDTO member) {
-		return new Member();
+	public static Member fromDTO(MemberDTO memberDTO) {
+		Member member = new Member();
+		member.setName(memberDTO.getName());
+		member.setCpf(memberDTO.getCpf());
+		return member;
 	}
 	
 	public static MemberDTO toDTO(Member member) {
-		return new MemberDTO();
+		MemberDTO dto = new MemberDTO();
+		dto.setId(member.getId());
+		dto.setName(member.getName());
+		dto.setCpf(member.getCpf());
+		return dto;
 	}
 	
 	 public static List<MemberDTO> toDtoList(List<Member> members) {
