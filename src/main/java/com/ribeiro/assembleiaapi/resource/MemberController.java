@@ -17,6 +17,12 @@ import com.ribeiro.assembleiaapi.Service.impl.MemberServiceImpl;
 import com.ribeiro.assembleiaapi.model.dto.MemberDTO;
 import com.ribeiro.assembleiaapi.resource.dto.ResponseDTO;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -27,6 +33,13 @@ public class MemberController {
 	private final MemberServiceImpl service;
 
 	@GetMapping
+	@Operation(summary = "Retorna a lista de todos os membros")
+	@ApiResponses(value = { 
+			  @ApiResponse(responseCode = "200", description = "Lista de membros", 
+			    content = { @Content(mediaType = "application/json", 
+			      schema = @Schema(implementation = MemberDTO.class)) }),
+			  @ApiResponse(responseCode = "404", description = "Nenhum membro encontrado", 
+			    content = @Content) })	
 	public ResponseEntity<List<MemberDTO>> getAll() {
 		return ResponseEntity.status(HttpStatus.OK).body(service.getAll());
 	}
@@ -39,7 +52,8 @@ public class MemberController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<ResponseDTO> updateMember(@PathVariable("id") Long id, @RequestBody MemberDTO dto) {
+	@Operation(summary = "Altera os dados do membro")
+	public ResponseEntity<ResponseDTO> updateMember(@Parameter(description = "identificador do membro") @PathVariable("id") Long id, @RequestBody MemberDTO dto) {
 		MemberDTO dtoSaved = service.update(id, dto);
 		ResponseDTO response = new ResponseDTO("Updated Member! ID: " + dtoSaved.getId());
 		return ResponseEntity.status(HttpStatus.OK).body(response);
