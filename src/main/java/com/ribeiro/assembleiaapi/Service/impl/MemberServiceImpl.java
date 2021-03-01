@@ -3,7 +3,6 @@ package com.ribeiro.assembleiaapi.Service.impl;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +22,11 @@ import com.ribeiro.assembleiaapi.model.repository.MemberRepository;
 @Service
 public class MemberServiceImpl implements MemberService {
 
-	@Autowired
-	MemberRepository memberRepository;
+	private MemberRepository memberRepository;
+	
+	public MemberServiceImpl(MemberRepository repository) {
+		this.memberRepository = repository;
+	}
 
 	/**
 	 * Method to save a new Member
