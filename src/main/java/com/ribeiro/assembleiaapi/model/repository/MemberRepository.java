@@ -8,6 +8,8 @@ import com.ribeiro.assembleiaapi.model.entity.Member;
 
 public interface MemberRepository extends JpaRepository<Member, Long>{
 
-	public List<Member> findAllByOrderByIdAsc();
+	List<Member> findAllByOrderByIdAsc();
 	
+	Member findByCpf(Long cpf);
+
 }
