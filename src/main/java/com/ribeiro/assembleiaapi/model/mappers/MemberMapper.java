@@ -16,7 +16,7 @@ public class MemberMapper {
 		member.setCpf(memberDTO.getCpf());
 		return member;
 	}
-	
+
 	public static MemberDTO toDTO(Member member) {
 		MemberDTO dto = new MemberDTO();
 		dto.setId(member.getId());
@@ -24,15 +24,15 @@ public class MemberMapper {
 		dto.setCpf(member.getCpf());
 		return dto;
 	}
-	
-	 public static List<MemberDTO> toDtoList(List<Member> members) {
-	        List<MemberDTO> memberDtos = new ArrayList<>();
-	        for (Member member : members) {
-	        	MemberDTO dto = new MemberDTO();
-	            BeanUtils.copyProperties(member, dto);
-	            memberDtos.add(dto);
-	        }
-	        return memberDtos;
-	    }
-	
+
+	public static List<MemberDTO> toDtoList(List<Member> members) {
+		List<MemberDTO> memberDtos = new ArrayList<>();
+		for (Member member : members) {
+			MemberDTO dto = new MemberDTO();
+			BeanUtils.copyProperties(member, dto);
+			memberDtos.add(dto);
+		}
+		return memberDtos;
+	}
+
 }
