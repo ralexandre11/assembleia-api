@@ -25,6 +25,12 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * 
+ * @author ricardo
+ * @since 01/03/2021
+ *
+ */
 @RestController
 @RequestMapping("/member")
 @RequiredArgsConstructor
@@ -44,6 +50,11 @@ public class MemberController {
 		return ResponseEntity.status(HttpStatus.OK).body(service.getAll());
 	}
 
+	/**
+	 * Method to create new member
+	 * @param dto
+	 * @return ResponseDTO
+	 */
 	@PostMapping
 	public ResponseEntity<ResponseDTO> createMember(@RequestBody MemberDTO dto) {
 		MemberDTO dtoSaved = service.save(dto);
