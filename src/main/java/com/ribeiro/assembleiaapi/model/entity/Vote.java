@@ -5,6 +5,8 @@ import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,7 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.ribeiro.assembleiaapi.model.enums.VoteValue;
+import com.ribeiro.assembleiaapi.model.enums.VoteEnum;
 import com.sun.istack.NotNull;
 
 import lombok.AllArgsConstructor;
@@ -38,7 +40,8 @@ public class Vote implements Serializable {
 	
 	@NotNull
 	@Column(name = "vote_value")
-	private VoteValue voteValue;
+	@Enumerated(EnumType.STRING)
+	private VoteEnum voteValue;
 	
 	@NotNull
 	@ManyToOne(cascade=CascadeType.PERSIST) @JoinColumn(name="id_agenda")
