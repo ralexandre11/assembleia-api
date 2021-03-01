@@ -13,10 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ribeiro.assembleiaapi.Service.impl.AgendaServiceImpl;
+import com.ribeiro.assembleiaapi.model.dto.AgendaAddDTO;
 import com.ribeiro.assembleiaapi.model.dto.AgendaDTO;
+import com.ribeiro.assembleiaapi.model.dto.AgendaExpirationDTO;
 import com.ribeiro.assembleiaapi.resource.dto.ResponseDTO;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -45,12 +48,14 @@ public class AgendaController {
 	/**
 	 * Method to create a new Agenda
 	 * @param dto
-	 * @return
+	 * @return ResponseDTO
 	 */
 	@PostMapping
 	@Operation(summary = "Cria uma nova pauta")
-	public ResponseEntity<ResponseDTO> createAgenda(@RequestBody AgendaDTO dto) {
-		AgendaDTO dtoSaved = service.save(dto);
+	public ResponseEntity<ResponseDTO> createAgenda(
+			@Parameter(description = "Agenda description")
+			@RequestBody AgendaAddDTO agendaAddDto) {
+		AgendaDTO dtoSaved = service.save(AgendaDTO.builder().description(agendaAddDto.getDescription()).build());
 		ResponseDTO response = new ResponseDTO("Created Agenda! ID: " + dtoSaved.getId());
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}
@@ -59,12 +64,15 @@ public class AgendaController {
 	 * Method to open a new Agenda Session with an expiration date
 	 * @param id
 	 * @param dto
-	 * @return
+	 * @return ResponseDTO
 	 */
 	@PutMapping("/{id}")
 	@Operation(summary = "Abre uma sessão para votação de uma determinada pauta")
-	public ResponseEntity<ResponseDTO> openSessionAgenda(@PathVariable("id") Long id, @RequestBody AgendaDTO dto) {
-		AgendaDTO dtoSaved = service.update(id, dto);
+	public ResponseEntity<ResponseDTO> openSessionAgenda(
+			@PathVariable("id") Long id,
+			@Parameter(description = "Agenda expiration date")
+			@RequestBody AgendaExpirationDTO expiration) {
+		AgendaDTO dtoSaved = service.update(id, AgendaDTO.builder().expiration(expiration.getExpiration()).build());
 		ResponseDTO response = new ResponseDTO("Opened Session! ID: " + dtoSaved.getId());
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}

@@ -1,7 +1,5 @@
 package com.ribeiro.assembleiaapi.model.dto;
 
-import com.ribeiro.assembleiaapi.model.enums.VoteEnum;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,14 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Builder
-public class VoteDTO {
-
-	private Long id;
+public class AgendaAddDTO {
 	
-	private VoteEnum voteValue;
+	private String description;
 	
-	private Long idAgenda;
-
-	private Long cpf;
-
 }
