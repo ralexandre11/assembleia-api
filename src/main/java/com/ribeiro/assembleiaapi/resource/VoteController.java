@@ -17,6 +17,12 @@ import com.ribeiro.assembleiaapi.resource.dto.ResponseDTO;
 
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Class responsible for making the endpoint available: "/vote"
+ * @author Ricardo Ribeiro (https://www.linkedin.com/in/ricardoalexandreribeiro/)
+ * @since 01/03/2021
+ *
+ */
 @RestController
 @RequestMapping("/vote")
 @RequiredArgsConstructor
@@ -25,12 +31,22 @@ public class VoteController {
 	@Autowired
 	VoteService service;
 
+	/**
+	 * Method to return a result votes 
+	 * @param idAgenda
+	 * @return VoteResultDTO
+	 */
 	@GetMapping("/{idAgenda}")
 	public ResponseEntity<VoteResultDTO> resultVotes(@PathVariable("idAgenda") Long idAgenda) {
 		VoteResultDTO votesResult = service.getResultVotes(idAgenda);
 		return ResponseEntity.status(HttpStatus.CREATED).body(votesResult);
 	}
 	
+	/**
+	 * Method for registering a new vote
+	 * @param dto
+	 * @return ResponseDTO
+	 */
 	@PostMapping
 	public ResponseEntity<ResponseDTO> createVote(@RequestBody VoteDTO dto) {
 		service.registerVote(dto);

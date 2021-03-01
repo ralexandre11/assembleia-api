@@ -14,12 +14,23 @@ import com.ribeiro.assembleiaapi.model.entity.Member;
 import com.ribeiro.assembleiaapi.model.mappers.MemberMapper;
 import com.ribeiro.assembleiaapi.model.repository.MemberRepository;
 
+/**
+ * Class that implements the Member service layer
+ * @author Ricardo Ribeiro (https://www.linkedin.com/in/ricardoalexandreribeiro/)
+ * @since 01/03/2021
+ *
+ */
 @Service
 public class MemberServiceImpl implements MemberService {
 
 	@Autowired
 	MemberRepository memberRepository;
 
+	/**
+	 * Method to save a new Member
+	 * @param dto
+	 * @return MemberDTO
+	 */
 	@Override
 	public MemberDTO save(MemberDTO dto) {
 		try {
@@ -34,6 +45,12 @@ public class MemberServiceImpl implements MemberService {
 		}
 	}
 
+	/**
+	 * Method for updating an existing Member
+	 * @param id
+	 * @param dto
+	 * @return MemberDTO
+	 */
 	@Override
 	public MemberDTO update(Long id, MemberDTO dto) {
 		try {
@@ -49,6 +66,9 @@ public class MemberServiceImpl implements MemberService {
 		}
 	}
 
+	/**
+	 * Method for deleting an existing Member
+	 */
 	@Override
 	public void delete(Long id) {
 		try {
@@ -61,6 +81,10 @@ public class MemberServiceImpl implements MemberService {
 		}
 	}
 
+	/**
+	 * Method to return all Members
+	 * @return List<MemberDTO>
+	 */
 	@Override
 	public List<MemberDTO> getAll() {
 		try {
@@ -71,6 +95,9 @@ public class MemberServiceImpl implements MemberService {
 		}
 	}
 
+	/**
+	 * Method to return a Member by ID
+	 */
 	@Override
 	public Member getById(Long id) {
 		try {
@@ -86,6 +113,9 @@ public class MemberServiceImpl implements MemberService {
 		}
 	}
 
+	/**
+	 * Method to return a Member by CPF
+	 */
 	@Override
 	public Member getByCpf(Long cpf) {
 		Member member = memberRepository.findByCpf(cpf);

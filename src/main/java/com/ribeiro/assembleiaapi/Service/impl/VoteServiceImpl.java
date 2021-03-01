@@ -19,6 +19,12 @@ import com.ribeiro.assembleiaapi.model.enums.VoteEnum;
 import com.ribeiro.assembleiaapi.model.mappers.VoteMapper;
 import com.ribeiro.assembleiaapi.model.repository.VoteRepository;
 
+/**
+ * Class that implements the Vote service layer
+ * @author Ricardo Ribeiro (https://www.linkedin.com/in/ricardoalexandreribeiro/)
+ * @since 01/03/2021
+ *
+ */
 @Service
 public class VoteServiceImpl implements VoteService {
 
@@ -31,6 +37,9 @@ public class VoteServiceImpl implements VoteService {
 	@Autowired
 	private VoteRepository voteRepository;
 		
+	/**
+	 * Method for registering a new Vote by Member and Agenda
+	 */
 	@Override
 	public void registerVote(VoteDTO voteDTO) {
 		Agenda agenda = agendaService.getById(voteDTO.getIdAgenda());
@@ -42,29 +51,10 @@ public class VoteServiceImpl implements VoteService {
 		Vote vote = VoteMapper.fromDTO(voteDTO, agenda, member);
 		voteRepository.save(vote);
 	}
-	
-	private void isOpenedAgenda(Agenda agenda) {
-		Date date = new Date();
-		if(agenda.getExpiration() == null || agenda.getExpiration().after(date)) {
-			throw new ApiException("Agenda is not Opened!", HttpStatus.BAD_REQUEST);
-		}
-	}
 
-	private Member existCpf(Long cpf) {
-		Member member = memberService.getByCpf(cpf);
-		if (member == null) {
-			throw new ApiException("CPF not exist!", HttpStatus.BAD_REQUEST);
-		}
-		return member;
-	}
-	
-	private void alredyVoteCpfAgenda(Agenda agenda, Member member) {
-		Vote vote = voteRepository.findByAgendaAndMember(agenda, member);
-		if (vote != null) {
-			throw new ApiException("This Member has already voted!", HttpStatus.BAD_REQUEST);
-		}
-	}
-
+	/**
+	 * Method to return a result all Votes by Agenda
+	 */
 	@Override
 	public VoteResultDTO getResultVotes(Long idAgenda) {
 		return VoteResultDTO.builder()
@@ -74,4 +64,39 @@ public class VoteServiceImpl implements VoteService {
 				.build();
 	}
 
+	/**
+	 * Method to check if Agenda is opened
+	 * @param agenda
+	 */
+	private void isOpenedAgenda(Agenda agenda) {
+		Date date = new Date();
+		if(agenda.getExpiration() == null || agenda.getExpiration().after(date)) {
+			throw new ApiException("Agenda is not Opened!", HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	/**
+	 * Method to verify if exist CPF
+	 * @param cpf
+	 * @return
+	 */
+	private Member existCpf(Long cpf) {
+		Member member = memberService.getByCpf(cpf);
+		if (member == null) {
+			throw new ApiException("CPF not exist!", HttpStatus.BAD_REQUEST);
+		}
+		return member;
+	}
+	
+	/**
+	 * Method to check if the vote has alredy registered 
+	 * @param agenda
+	 * @param member
+	 */
+	private void alredyVoteCpfAgenda(Agenda agenda, Member member) {
+		Vote vote = voteRepository.findByAgendaAndMember(agenda, member);
+		if (vote != null) {
+			throw new ApiException("This Member has already voted!", HttpStatus.BAD_REQUEST);
+		}
+	}
 }

@@ -16,12 +16,23 @@ import com.ribeiro.assembleiaapi.model.entity.Agenda;
 import com.ribeiro.assembleiaapi.model.mappers.AgendaMapper;
 import com.ribeiro.assembleiaapi.model.repository.AgendaRepository;
 
+/**
+ * Class that implements the Agenda service layer
+ * @author Ricardo Ribeiro (https://www.linkedin.com/in/ricardoalexandreribeiro/)
+ * @since 01/03/2021
+ *
+ */
 @Service
 public class AgendaServiceImpl implements AgendaService {
 
 	@Autowired
 	AgendaRepository agendaRepository;
 
+	/**
+	 * Method to create new agenda
+	 * @param dto
+	 * @return AgendaDTO
+	 */
 	@Override
 	public AgendaDTO save(AgendaDTO dto) {
 		try {
@@ -36,6 +47,12 @@ public class AgendaServiceImpl implements AgendaService {
 		}
 	}
 
+	/**
+	 * Method to Open new agenda session
+	 * @param id
+	 * @param dto
+	 * @return AgendaDTO
+	 */
 	@Override
 	public AgendaDTO update(Long id, AgendaDTO dto) {
 		try {
@@ -54,6 +71,10 @@ public class AgendaServiceImpl implements AgendaService {
 		}
 	}
 	
+	/**
+	 * Method to return all agendas
+	 * @return List<AgendaDTO>
+	 */
 	@Override
 	public List<AgendaDTO> getAll() {
 		try {
@@ -63,6 +84,11 @@ public class AgendaServiceImpl implements AgendaService {
 			return new ArrayList<>();		}
 	}
 
+	/**
+	 * Method to get agenda by ID
+	 * @param id
+	 * @return Agenda
+	 */
 	@Override
 	public Agenda getById(Long id) {
 		try {
@@ -78,6 +104,10 @@ public class AgendaServiceImpl implements AgendaService {
 		}
 	}
 
+	/**
+	 * Method to return a date plus one minute
+	 * @return Date
+	 */
 	private Date oneMinuteExpiration() {
 		Date date = new Date();
 		long curTimeInMs = date.getTime();
