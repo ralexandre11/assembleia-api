@@ -1,20 +1,16 @@
 package com.ribeiro.assembleiaapi.Service;
 
-import java.util.List;
-import java.util.Optional;
-
-import com.ribeiro.assembleiaapi.model.entity.Vote;
+import com.ribeiro.assembleiaapi.model.dto.VoteDTO;
+import com.ribeiro.assembleiaapi.model.dto.VoteResultDTO;
 
 public interface VoteService {
 
-	Vote save(Vote vote);
+	void registerVote(VoteDTO voteDTO);
 	
-	Vote update(Vote vote);
+	VoteResultDTO getResultVotes(Long idAgenda);
 	
-	void delete(Vote vote);
-	
-	List<Vote> all();
-	
-	Optional<Vote> getByID(Long id);
+//	List<Vote> all();
+//	
+//	Optional<Vote> getByID(Long id);
 	
 }

@@ -86,4 +86,10 @@ public class MemberServiceImpl implements MemberService {
 		}
 	}
 
+	@Override
+	public Member getByCpf(Long cpf) {
+		Member member = memberRepository.findByCpf(cpf);
+		return member;
+	}
+
 }
