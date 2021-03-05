@@ -3,16 +3,18 @@ package com.ribeiro.assembleiaapi.model.mappers;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ribeiro.assembleiaapi.model.dto.AgendaAddDTO;
 import com.ribeiro.assembleiaapi.model.dto.AgendaDTO;
 import com.ribeiro.assembleiaapi.model.dto.VoteDTO;
 import com.ribeiro.assembleiaapi.model.entity.Agenda;
 
 public class AgendaMapper {
 
-	public static Agenda fromDTO(AgendaDTO agendaDTO) {
+	public static Agenda fromDTO(AgendaAddDTO dto) {
 		Agenda agenda = new Agenda();
-		agenda.setDescription(agendaDTO.getDescription());
-		agenda.setExpiration(agendaDTO.getExpiration());
+		agenda.setDescription(dto.getDescription());
+		//TODO 
+		//agenda.setExpiration(agendaDTO.getExpiration());
 		return agenda;
 	}
 

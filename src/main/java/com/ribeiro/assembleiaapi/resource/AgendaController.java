@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ribeiro.assembleiaapi.Service.impl.AgendaServiceImpl;
+import com.ribeiro.assembleiaapi.Service.AgendaService;
 import com.ribeiro.assembleiaapi.model.dto.AgendaAddDTO;
 import com.ribeiro.assembleiaapi.model.dto.AgendaDTO;
 import com.ribeiro.assembleiaapi.model.dto.AgendaExpirationDTO;
@@ -33,7 +33,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AgendaController {
 
-	private final AgendaServiceImpl service;
+	private final AgendaService service;
 
 	/**
 	 * Method to return all Agendas
@@ -53,10 +53,18 @@ public class AgendaController {
 	@PostMapping
 	@Operation(summary = "Cria uma nova pauta")
 	public ResponseEntity<ResponseDTO> createAgenda(
+			//TODO arrumar description
 			@Parameter(description = "Agenda description")
+			//TODO mantenha a consistência DTO vs Dto
+			//TODO how to create agenda with a specific expiration?
 			@RequestBody AgendaAddDTO agendaAddDto) {
-		AgendaDTO dtoSaved = service.save(AgendaDTO.builder().description(agendaAddDto.getDescription()).build());
+		
+		AgendaDTO dtoSaved = service.save(agendaAddDto);
+		
 		ResponseDTO response = new ResponseDTO("Created Agenda! ID: " + dtoSaved.getId());
+
+		//TODO ++ add location header
+		//TODO return all fields from agenda
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}
 
