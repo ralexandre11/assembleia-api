@@ -1,3 +1,4 @@
+//TODO rename to lower case
 package com.ribeiro.assembleiaapi.Service.impl;
 
 import java.util.ArrayList;
@@ -5,7 +6,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +17,8 @@ import com.ribeiro.assembleiaapi.model.entity.Agenda;
 import com.ribeiro.assembleiaapi.model.mappers.AgendaMapper;
 import com.ribeiro.assembleiaapi.model.repository.AgendaRepository;
 
+import lombok.AllArgsConstructor;
+
 /**
  * Class that implements the Agenda service layer
  * @author Ricardo Ribeiro (https://www.linkedin.com/in/ricardoalexandreribeiro/)
@@ -24,10 +26,10 @@ import com.ribeiro.assembleiaapi.model.repository.AgendaRepository;
  *
  */
 @Service
+@AllArgsConstructor
 public class AgendaServiceImpl implements AgendaService {
 
-	@Autowired
-	AgendaRepository agendaRepository;
+	private final AgendaRepository agendaRepository;
 
 	/**
 	 * Method to create new agenda
@@ -37,14 +39,18 @@ public class AgendaServiceImpl implements AgendaService {
 	@Override
 	public AgendaDTO save(AgendaAddDTO dto) {
 		try {
-			//TODO mapper not static
+			//TODO change mapper to be not static and change test AgendaServiceImplTest.givenDto_whenSave_thenAgendaIsSaved()
 			Agenda agenda = AgendaMapper.fromDTO(dto);
 			
 			Agenda agendaSaved = agendaRepository.save(agenda);
+			
+			//TODO change mapper to be not static and change test AgendaServiceImplTest.givenDto_whenSave_thenAgendaIsSaved()
 			return AgendaMapper.toDTO(agendaSaved);
 		} catch (ApiException a) {
+			//TODO review: only throw, could be removed
 			throw a;
 		} catch (Exception e) {
+			//TOD review: service should not know HttpStatus!!!
 			throw new ApiException("Internal Error!", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

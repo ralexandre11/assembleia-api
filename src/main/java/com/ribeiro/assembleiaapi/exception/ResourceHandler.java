@@ -10,6 +10,7 @@ import com.ribeiro.assembleiaapi.exception.ErrorResponse.ErrorResponseBuilder;
 public class ResourceHandler {
 
 	@ExceptionHandler(ApiException.class)
+	//TODO rename
 	public ResponseEntity<ErrorResponse> handlerDisciplineException(ApiException apiExcepiton) {
 		ErrorResponseBuilder error = ErrorResponse.builder();
 		error.httpStatus(apiExcepiton.getHttpStatus().value());
