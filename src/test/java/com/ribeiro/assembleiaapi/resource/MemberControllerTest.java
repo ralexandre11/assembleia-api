@@ -27,12 +27,6 @@ class MemberControllerTest {
 		memberController = new MemberController(memberService);
 	}
 
-//	public ResponseEntity<ResponseDTO> createMember(@RequestBody MemberDTO dto) {
-//		MemberDTO dtoSaved = service.save(dto);
-//		ResponseDTO response = new ResponseDTO("Created Member! ID: " + dtoSaved.getId());
-//		return ResponseEntity.status(HttpStatus.CREATED).body(response);
-//	}	
-
 	@Test
 	void givenMember_whenCreateMember_thenMemberIsCreated() {
 		// Given
@@ -50,6 +44,23 @@ class MemberControllerTest {
 		Assertions.assertThat(responseDTO.getMessage()).isEqualTo("Created Member! ID: 1");
 	}
 
-	
+	@Test
+	void givenMemberAndIdMember_whenUpdateMember_thenAgendaIsUpdated() {
+		// Given
+		Long id = 1L;
+		MemberDTO existingMemberDto = Mockito.mock(MemberDTO.class);
+		MemberDTO savedMemberDto = MemberDTO.builder().id(1L).name("User Test 02").cpf(87726955015L).build();		
+		
+		Mockito.when(memberService.update(id, existingMemberDto)).thenReturn(savedMemberDto);
+
+		// When
+		ResponseEntity<ResponseDTO> response = memberController.updateMember(id, existingMemberDto);
+
+		// Then
+		Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+		ResponseDTO responseDTO = response.getBody();
+		Assertions.assertThat(responseDTO.getMessage()).isEqualTo("Updated Member! ID: 1");
+	}
+
 
 }
