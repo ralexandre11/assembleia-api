@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.ribeiro.assembleiaapi.Service.AgendaService;
 import com.ribeiro.assembleiaapi.exception.ApiException;
+import com.ribeiro.assembleiaapi.model.dto.AgendaAddDTO;
 import com.ribeiro.assembleiaapi.model.dto.AgendaDTO;
 import com.ribeiro.assembleiaapi.model.entity.Agenda;
 import com.ribeiro.assembleiaapi.model.mappers.AgendaMapper;
@@ -34,8 +35,9 @@ public class AgendaServiceImpl implements AgendaService {
 	 * @return AgendaDTO
 	 */
 	@Override
-	public AgendaDTO save(AgendaDTO dto) {
+	public AgendaDTO save(AgendaAddDTO dto) {
 		try {
+			//TODO mapper not static
 			Agenda agenda = AgendaMapper.fromDTO(dto);
 			
 			Agenda agendaSaved = agendaRepository.save(agenda);
