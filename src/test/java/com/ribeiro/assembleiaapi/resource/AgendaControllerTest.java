@@ -12,11 +12,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.ribeiro.assembleiaapi.Service.AgendaService;
 import com.ribeiro.assembleiaapi.model.dto.AgendaAddDTO;
 import com.ribeiro.assembleiaapi.model.dto.AgendaDTO;
 import com.ribeiro.assembleiaapi.model.dto.AgendaExpirationDTO;
 import com.ribeiro.assembleiaapi.resource.dto.ResponseDTO;
+import com.ribeiro.assembleiaapi.service.AgendaService;
 
 @ExtendWith(MockitoExtension.class)
 class AgendaControllerTest {

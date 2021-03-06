@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ribeiro.assembleiaapi.Service.VoteService;
 import com.ribeiro.assembleiaapi.model.dto.VoteDTO;
 import com.ribeiro.assembleiaapi.model.dto.VoteResultDTO;
 import com.ribeiro.assembleiaapi.resource.dto.ResponseDTO;
+import com.ribeiro.assembleiaapi.service.VoteService;
 
 import lombok.RequiredArgsConstructor;
 

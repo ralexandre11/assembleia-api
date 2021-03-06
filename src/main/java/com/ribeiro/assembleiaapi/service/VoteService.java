@@ -1,4 +1,4 @@
-package com.ribeiro.assembleiaapi.Service;
+package com.ribeiro.assembleiaapi.service;
 
 import com.ribeiro.assembleiaapi.model.dto.VoteDTO;
 import com.ribeiro.assembleiaapi.model.dto.VoteResultDTO;

@@ -1,4 +1,4 @@
-package com.ribeiro.assembleiaapi.Service.impl;
+package com.ribeiro.assembleiaapi.service.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,13 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import com.ribeiro.assembleiaapi.Service.AgendaService;
 import com.ribeiro.assembleiaapi.exception.ApiException;
 import com.ribeiro.assembleiaapi.model.dto.AgendaAddDTO;
 import com.ribeiro.assembleiaapi.model.dto.AgendaDTO;
 import com.ribeiro.assembleiaapi.model.entity.Agenda;
 import com.ribeiro.assembleiaapi.model.mappers.AgendaMapper;
 import com.ribeiro.assembleiaapi.model.repository.AgendaRepository;
+import com.ribeiro.assembleiaapi.service.AgendaService;
 
 /**
  * Class that implements the Agenda service layer

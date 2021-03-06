@@ -1,4 +1,4 @@
-package com.ribeiro.assembleiaapi.Service.impl;
+package com.ribeiro.assembleiaapi.service.impl;
 
 import java.util.Date;
 
@@ -6,9 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import com.ribeiro.assembleiaapi.Service.AgendaService;
-import com.ribeiro.assembleiaapi.Service.MemberService;
-import com.ribeiro.assembleiaapi.Service.VoteService;
 import com.ribeiro.assembleiaapi.exception.ApiException;
 import com.ribeiro.assembleiaapi.model.dto.VoteDTO;
 import com.ribeiro.assembleiaapi.model.dto.VoteResultDTO;
@@ -18,6 +15,9 @@ import com.ribeiro.assembleiaapi.model.entity.Vote;
 import com.ribeiro.assembleiaapi.model.enums.VoteEnum;
 import com.ribeiro.assembleiaapi.model.mappers.VoteMapper;
 import com.ribeiro.assembleiaapi.model.repository.VoteRepository;
+import com.ribeiro.assembleiaapi.service.AgendaService;
+import com.ribeiro.assembleiaapi.service.MemberService;
+import com.ribeiro.assembleiaapi.service.VoteService;
 
 /**
  * Class that implements the Vote service layer

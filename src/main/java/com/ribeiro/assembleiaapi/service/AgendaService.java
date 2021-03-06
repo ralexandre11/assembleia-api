@@ -1,4 +1,4 @@
-package com.ribeiro.assembleiaapi.Service;
+package com.ribeiro.assembleiaapi.service;
 
 import java.util.List;
 

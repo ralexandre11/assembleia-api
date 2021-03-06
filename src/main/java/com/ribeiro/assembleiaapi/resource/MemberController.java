@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ribeiro.assembleiaapi.Service.impl.MemberServiceImpl;
 import com.ribeiro.assembleiaapi.model.dto.MemberDTO;
 import com.ribeiro.assembleiaapi.resource.dto.ResponseDTO;
+import com.ribeiro.assembleiaapi.service.impl.MemberServiceImpl;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

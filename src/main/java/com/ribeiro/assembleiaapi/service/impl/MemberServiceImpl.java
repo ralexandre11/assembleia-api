@@ -1,4 +1,4 @@
-package com.ribeiro.assembleiaapi.Service.impl;
+package com.ribeiro.assembleiaapi.service.impl;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,12 +6,12 @@ import java.util.Optional;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import com.ribeiro.assembleiaapi.Service.MemberService;
 import com.ribeiro.assembleiaapi.exception.ApiException;
 import com.ribeiro.assembleiaapi.model.dto.MemberDTO;
 import com.ribeiro.assembleiaapi.model.entity.Member;
 import com.ribeiro.assembleiaapi.model.mappers.MemberMapper;
 import com.ribeiro.assembleiaapi.model.repository.MemberRepository;
+import com.ribeiro.assembleiaapi.service.MemberService;
 
 /**
  * Class that implements the Member service layer
