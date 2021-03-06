@@ -80,8 +80,11 @@ public class AgendaController {
 			@PathVariable("id") Long id,
 			@Parameter(description = "Agenda expiration date")
 			@RequestBody AgendaExpirationDTO expiration) {
+		
 		AgendaDTO dtoSaved = service.update(id, AgendaDTO.builder().expiration(expiration.getExpiration()).build());
+		
 		ResponseDTO response = new ResponseDTO("Opened Session! ID: " + dtoSaved.getId());
+		
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 

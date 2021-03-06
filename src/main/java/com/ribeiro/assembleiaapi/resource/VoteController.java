@@ -29,7 +29,7 @@ import lombok.RequiredArgsConstructor;
 public class VoteController {
 
 	@Autowired
-	VoteService service;
+	private final VoteService service;
 
 	/**
 	 * Method to return a result votes 
