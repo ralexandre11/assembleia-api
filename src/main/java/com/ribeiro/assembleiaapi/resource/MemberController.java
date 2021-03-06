@@ -69,9 +69,14 @@ public class MemberController {
 	 */
 	@PutMapping("/{id}")
 	@Operation(summary = "Update a member")
-	public ResponseEntity<ResponseDTO> updateMember(@Parameter(description = "identificador do membro") @PathVariable("id") Long id, @RequestBody MemberDTO dto) {
+	public ResponseEntity<ResponseDTO> updateMember(
+			@Parameter(description = "Member ID") 
+			@PathVariable("id") Long id, @RequestBody MemberDTO dto) {
+
 		MemberDTO dtoSaved = service.update(id, dto);
+		
 		ResponseDTO response = new ResponseDTO("Updated Member! ID: " + dtoSaved.getId());
+		
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 	
@@ -82,9 +87,14 @@ public class MemberController {
 	 */
 	@DeleteMapping("/{id}")
 	@Operation(summary = "Delete a member")
-	public ResponseEntity<ResponseDTO> deleteMember(@PathVariable("id") Long id) {
+	public ResponseEntity<ResponseDTO> deleteMember(
+			@Parameter(description = "Member ID") 
+			@PathVariable("id") Long id) {
+
 		service.delete(id);
+		
 		ResponseDTO response = new ResponseDTO("Deleted Member!");
+		
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 
