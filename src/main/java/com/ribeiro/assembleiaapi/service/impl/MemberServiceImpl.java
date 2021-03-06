@@ -13,6 +13,8 @@ import com.ribeiro.assembleiaapi.model.mappers.MemberMapper;
 import com.ribeiro.assembleiaapi.model.repository.MemberRepository;
 import com.ribeiro.assembleiaapi.service.MemberService;
 
+import lombok.AllArgsConstructor;
+
 /**
  * Class that implements the Member service layer
  * @author Ricardo Ribeiro (https://www.linkedin.com/in/ricardoalexandreribeiro/)
@@ -20,13 +22,10 @@ import com.ribeiro.assembleiaapi.service.MemberService;
  *
  */
 @Service
+@AllArgsConstructor
 public class MemberServiceImpl implements MemberService {
 
-	private MemberRepository memberRepository;
-	
-	public MemberServiceImpl(MemberRepository repository) {
-		this.memberRepository = repository;
-	}
+	private final MemberRepository memberRepository;
 
 	/**
 	 * Method to save a new Member
