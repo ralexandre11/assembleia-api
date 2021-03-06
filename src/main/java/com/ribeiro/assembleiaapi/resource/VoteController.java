@@ -1,6 +1,5 @@
 package com.ribeiro.assembleiaapi.resource;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +14,7 @@ import com.ribeiro.assembleiaapi.model.dto.VoteResultDTO;
 import com.ribeiro.assembleiaapi.resource.dto.ResponseDTO;
 import com.ribeiro.assembleiaapi.service.VoteService;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -28,18 +28,20 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class VoteController {
 
-	@Autowired
 	private final VoteService service;
 
 	/**
-	 * Method to return a result votes 
+	 * Method to return the voting result
 	 * @param idAgenda
 	 * @return VoteResultDTO
 	 */
 	@GetMapping("/{idAgenda}")
-	public ResponseEntity<VoteResultDTO> resultVotes(@PathVariable("idAgenda") Long idAgenda) {
-		VoteResultDTO votesResult = service.getResultVotes(idAgenda);
-		return ResponseEntity.status(HttpStatus.CREATED).body(votesResult);
+	@Operation(summary = "Return the voting result")
+	public ResponseEntity<VoteResultDTO> votingResult(@PathVariable("idAgenda") Long idAgenda) {
+
+		VoteResultDTO votingResult = service.getResultVotes(idAgenda);
+		
+		return ResponseEntity.status(HttpStatus.OK).body(votingResult);
 	}
 	
 	/**
@@ -48,9 +50,13 @@ public class VoteController {
 	 * @return ResponseDTO
 	 */
 	@PostMapping
+	@Operation(summary = "Register a new vote")
 	public ResponseEntity<ResponseDTO> createVote(@RequestBody VoteDTO dto) {
+		
 		service.registerVote(dto);
+		
 		ResponseDTO response = new ResponseDTO("Vote OK!");
+		
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}
 }

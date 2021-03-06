@@ -40,7 +40,7 @@ public class AgendaController {
 	 * @return List<AgendaDTO>
 	 */
 	@GetMapping
-	@Operation(summary = "Retorna a lista de todas Pautas")
+	@Operation(summary = "Return a list of all Agendas")
 	public ResponseEntity<List<AgendaDTO>> getAll() {
 		return ResponseEntity.status(HttpStatus.OK).body(service.getAll());
 	}
@@ -51,12 +51,9 @@ public class AgendaController {
 	 * @return ResponseDTO
 	 */
 	@PostMapping
-	@Operation(summary = "Cria uma nova pauta")
+	@Operation(summary = "Create a new agenda")
 	public ResponseEntity<ResponseDTO> createAgenda(
-			//TODO arrumar description
-			@Parameter(description = "Agenda description")
-			//TODO mantenha a consistência DTO vs Dto
-			//TODO how to create agenda with a specific expiration?
+			@Parameter(description = "Description agenda")
 			@RequestBody AgendaAddDTO agendaAddDto) {
 		
 		AgendaDTO dtoSaved = service.save(agendaAddDto);
@@ -75,10 +72,10 @@ public class AgendaController {
 	 * @return ResponseDTO
 	 */
 	@PutMapping("/{id}")
-	@Operation(summary = "Abre uma sessão para votação de uma determinada pauta")
+	@Operation(summary = "Open a new vote session updating the agenda")
 	public ResponseEntity<ResponseDTO> openSessionAgenda(
 			@PathVariable("id") Long id,
-			@Parameter(description = "Agenda expiration date")
+			@Parameter(description = "Expiration date agenda")
 			@RequestBody AgendaExpirationDTO expiration) {
 		
 		AgendaDTO dtoSaved = service.update(id, AgendaDTO.builder().expiration(expiration.getExpiration()).build());
