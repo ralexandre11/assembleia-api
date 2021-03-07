@@ -3,6 +3,7 @@ package com.ribeiro.assembleiaapi;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 
 import com.ribeiro.assembleiaapi.model.dto.AgendaAddDTO;
+import com.ribeiro.assembleiaapi.model.dto.AgendaDTO;
 import com.ribeiro.assembleiaapi.model.dto.AgendaExpirationDTO;
 import com.ribeiro.assembleiaapi.model.dto.MemberDTO;
 import com.ribeiro.assembleiaapi.model.dto.VoteDTO;
@@ -36,13 +38,26 @@ class AssembleiaApiApplicationTests {
 	@Test
 	void givenDescription_whenPostAgenda_thenStatusCreated() {
 		// Given
-		HttpEntity<AgendaAddDTO> request = createAddAgendaRequest();
+		HttpEntity<AgendaAddDTO> request = createAddAgendaRequest(StringUtils.repeat("D", 10));
 
 		// When
-		ResponseEntity<ResponseDTO> response = createAgenda(request);
+		ResponseEntity<AgendaDTO> response = createAgenda(request);
 
 		// Then
 		Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+	}
+
+	@Test
+	void givenVeryLongDescription_whenPostAgenda_thenInternalError() {
+		// Given
+		HttpEntity<AgendaAddDTO> request = createAddAgendaRequest(StringUtils.repeat("D", 300));
+
+		// When
+		ResponseEntity<AgendaDTO> response = createAgenda(request);
+
+		// Then
+		//TODO should be BAD_REQUEST
+		Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 	@Test
@@ -50,21 +65,37 @@ class AssembleiaApiApplicationTests {
 		// Given
 		// All this configuration can be done through repositories, however, I chose
 		// this way to exercise other endpoints
-		HttpEntity<AgendaAddDTO> addAgendaRequest = createAddAgendaRequest();
-		createAgenda(addAgendaRequest);
+		HttpEntity<AgendaAddDTO> addAgendaRequest = createAddAgendaRequest(StringUtils.repeat("D", 10));
+		ResponseEntity<AgendaDTO> agenda = createAgenda(addAgendaRequest);
 		createMember(createMemberRequest());
-		openSession(createOpenSessionRequest());
-		HttpEntity<VoteDTO> voteRequest = createVoteRequest();
+		openSession(agenda.getBody().getId(), createOpenSessionRequest());
+		HttpEntity<VoteDTO> voteRequest = createVoteRequest(agenda.getBody().getId());
 
 		// When
 		ResponseEntity<ResponseDTO> response = vote(voteRequest);
 
 		// Then
+		//TODO depends on the return of the cpf validation, can fail sometimes. Need to mock cpf service
 		Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
 	}
 
-	private HttpEntity<AgendaAddDTO> createAddAgendaRequest() {
-		return new HttpEntity<>(new AgendaAddDTO("my description"));
+	@Test
+	void givenClosedAgenda_whenVote_thenStatusBadRequest() {
+		// Given
+		HttpEntity<AgendaAddDTO> addAgendaRequest = createAddAgendaRequest(StringUtils.repeat("D", 10));
+		ResponseEntity<AgendaDTO> agenda = createAgenda(addAgendaRequest);
+		HttpEntity<VoteDTO> voteRequest = createVoteRequest(agenda.getBody().getId());
+
+		// When
+		ResponseEntity<ResponseDTO> response = vote(voteRequest);
+
+		// Then
+		Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+		Assertions.assertThat(response.getBody().getMessage()).isEqualTo("Agenda is not Opened!");
+	}
+
+	private HttpEntity<AgendaAddDTO> createAddAgendaRequest(String description) {
+		return new HttpEntity<>(new AgendaAddDTO(description));
 	}
 
 	private HttpEntity<AgendaExpirationDTO> createOpenSessionRequest() {
@@ -79,21 +110,20 @@ class AssembleiaApiApplicationTests {
 		return new HttpEntity<>(new MemberDTO(null, "Test Member", 63940342076L));
 	}
 
-	private HttpEntity<VoteDTO> createVoteRequest() {
-		// TODO agenda id
-		return new HttpEntity<>(new VoteDTO(null, VoteEnum.SIM, 1L, 63940342076L));
+	private HttpEntity<VoteDTO> createVoteRequest(Long agendaId) {
+		return new HttpEntity<>(new VoteDTO(null, VoteEnum.SIM, agendaId, 63940342076L));
 	}
 
-	private ResponseEntity<ResponseDTO> createAgenda(final HttpEntity<AgendaAddDTO> request) {
-		return restTemplate.postForEntity(getUrl("/agenda"), request, ResponseDTO.class);
+	private ResponseEntity<AgendaDTO> createAgenda(final HttpEntity<AgendaAddDTO> request) {
+		return restTemplate.postForEntity(getUrl("/agenda"), request, AgendaDTO.class);
 	}
 
 	private ResponseEntity<ResponseDTO> createMember(final HttpEntity<MemberDTO> request) {
 		return restTemplate.postForEntity(getUrl("/member"), request, ResponseDTO.class);
 	}
 
-	private ResponseEntity<ResponseDTO> openSession(final HttpEntity<AgendaExpirationDTO> request) {
-		return restTemplate.exchange(getUrl("/agenda/1"), HttpMethod.PUT, request, ResponseDTO.class);
+	private ResponseEntity<ResponseDTO> openSession(Long agendaId, final HttpEntity<AgendaExpirationDTO> request) {
+		return restTemplate.exchange(getUrl("/agenda/" + agendaId), HttpMethod.PUT, request, ResponseDTO.class);
 	}
 
 	private ResponseEntity<ResponseDTO> vote(final HttpEntity<VoteDTO> request) {
