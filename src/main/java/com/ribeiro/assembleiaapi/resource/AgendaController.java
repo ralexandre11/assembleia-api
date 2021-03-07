@@ -25,7 +25,9 @@ import lombok.RequiredArgsConstructor;
 
 /**
  * Class responsible for making the endpoint available: "/agenda"
- * @author Ricardo Ribeiro (https://www.linkedin.com/in/ricardoalexandreribeiro/)
+ * 
+ * @author Ricardo Ribeiro
+ *         (https://www.linkedin.com/in/ricardoalexandreribeiro/)
  * @since 01/03/2021
  *
  */
@@ -38,6 +40,7 @@ public class AgendaController {
 
 	/**
 	 * Method to return all Agendas
+	 * 
 	 * @return List<AgendaDTO>
 	 */
 	@GetMapping
@@ -48,53 +51,43 @@ public class AgendaController {
 
 	/**
 	 * Method to create a new Agenda
+	 * 
 	 * @param dto
 	 * @return ResponseDTO
 	 */
 	@PostMapping
 	@Operation(summary = "Create a new agenda")
-	public ResponseEntity<ResponseDTO> createAgenda(
-			@Parameter(description = "Description agenda")
-			@RequestBody AgendaAddDTO agendaAddDto) {
+	public ResponseEntity<AgendaDTO> createAgenda(
+			@Parameter(description = "Description agenda") @RequestBody AgendaAddDTO agendaAddDto) {
 
-		try {
-			AgendaDTO dtoSaved = service.save(agendaAddDto);
-			ResponseDTO response = new ResponseDTO("Created Agenda! ID: " + dtoSaved.getId());
-	
-			//TODO ++ add location header
-			return ResponseEntity.status(HttpStatus.CREATED).body(response);
-		} catch (ApiExceptionController e) {
-			// TODO what's the diff between ApiException and ApiExceptionController
-			ResponseDTO response = new ResponseDTO(e.getMessage());
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response );
-		} catch (Exception e) {
-			throw new ApiExceptionController("Internal Error!", HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+		AgendaDTO dtoSaved = service.save(agendaAddDto);
 
+		// TODO ++ add location header
+		return ResponseEntity.status(HttpStatus.CREATED).body(dtoSaved);
 	}
 
 	/**
 	 * Method to open a new Agenda Session with an expiration date
+	 * 
 	 * @param id
 	 * @param dto
 	 * @return ResponseDTO
 	 */
 	@PutMapping("/{id}")
 	@Operation(summary = "Open a new vote session updating the agenda")
-	public ResponseEntity<ResponseDTO> openSessionAgenda(
-			@PathVariable("id") Long id,
-			@Parameter(description = "Expiration date agenda")
-			@RequestBody AgendaExpirationDTO expiration) {
+	public ResponseEntity<ResponseDTO> openSessionAgenda(@PathVariable("id") Long id,
+			@Parameter(description = "Expiration date agenda") @RequestBody AgendaExpirationDTO expiration) {
 		try {
 			AgendaDTO dtoSaved = service.update(id, AgendaDTO.builder().expiration(expiration.getExpiration()).build());
-			//TODO no need to return ID, already in the path
-			//TODO return expiration instead
+			// TODO no need to return ID, already in the path
+			// TODO return expiration instead
 			ResponseDTO response = new ResponseDTO("Opened Session! ID: " + dtoSaved.getId());
-			
+
 			return ResponseEntity.status(HttpStatus.OK).body(response);
 		} catch (ApiExceptionController e) {
+			// TODO what's the diff between ApiException and ApiExceptionController
 			ResponseDTO response = new ResponseDTO(e.getMessage());
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response );
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
 		} catch (Exception e) {
 			throw new ApiExceptionController("Internal Error!", HttpStatus.INTERNAL_SERVER_ERROR);
 		}

@@ -41,12 +41,12 @@ class AgendaControllerTest {
 		Mockito.when(agendaService.save(agendaAddDto)).thenReturn(agendaDto);
 
 		// When
-		ResponseEntity<ResponseDTO> response = agendaController.createAgenda(agendaAddDto);
+		ResponseEntity<AgendaDTO> response = agendaController.createAgenda(agendaAddDto);
 
 		// Then
 		Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
-		ResponseDTO responseDTO = response.getBody();
-		Assertions.assertThat(responseDTO.getMessage()).isEqualTo("Created Agenda! ID: 1");
+		AgendaDTO actual = response.getBody();
+		Assertions.assertThat(actual).isEqualTo(agendaDto);
 	}
 	
 	@Test
