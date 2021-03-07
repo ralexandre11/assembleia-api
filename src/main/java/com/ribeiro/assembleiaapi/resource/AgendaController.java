@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ribeiro.assembleiaapi.exception.ApiExceptionController;
 import com.ribeiro.assembleiaapi.model.dto.AgendaAddDTO;
 import com.ribeiro.assembleiaapi.model.dto.AgendaDTO;
 import com.ribeiro.assembleiaapi.model.dto.AgendaExpirationDTO;
@@ -55,14 +56,20 @@ public class AgendaController {
 	public ResponseEntity<ResponseDTO> createAgenda(
 			@Parameter(description = "Description agenda")
 			@RequestBody AgendaAddDTO agendaAddDto) {
-		
-		AgendaDTO dtoSaved = service.save(agendaAddDto);
-		
-		ResponseDTO response = new ResponseDTO("Created Agenda! ID: " + dtoSaved.getId());
 
-		//TODO ++ add location header
-		//TODO return all fields from agenda
-		return ResponseEntity.status(HttpStatus.CREATED).body(response);
+		try {
+			AgendaDTO dtoSaved = service.save(agendaAddDto);
+			ResponseDTO response = new ResponseDTO("Created Agenda! ID: " + dtoSaved.getId());
+	
+			//TODO ++ add location header
+			return ResponseEntity.status(HttpStatus.CREATED).body(response);
+		} catch (ApiExceptionController e) {
+			ResponseDTO response = new ResponseDTO(e.getMessage());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response );
+		} catch (Exception e) {
+			throw new ApiExceptionController("Internal Error!", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
 	}
 
 	/**
@@ -77,12 +84,18 @@ public class AgendaController {
 			@PathVariable("id") Long id,
 			@Parameter(description = "Expiration date agenda")
 			@RequestBody AgendaExpirationDTO expiration) {
-		
-		AgendaDTO dtoSaved = service.update(id, AgendaDTO.builder().expiration(expiration.getExpiration()).build());
-		
-		ResponseDTO response = new ResponseDTO("Opened Session! ID: " + dtoSaved.getId());
-		
-		return ResponseEntity.status(HttpStatus.OK).body(response);
+		try {
+			AgendaDTO dtoSaved = service.update(id, AgendaDTO.builder().expiration(expiration.getExpiration()).build());
+			ResponseDTO response = new ResponseDTO("Opened Session! ID: " + dtoSaved.getId());
+			
+			return ResponseEntity.status(HttpStatus.OK).body(response);
+		} catch (ApiExceptionController e) {
+			ResponseDTO response = new ResponseDTO(e.getMessage());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response );
+		} catch (Exception e) {
+			throw new ApiExceptionController("Internal Error!", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
 	}
 
 }

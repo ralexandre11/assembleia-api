@@ -15,7 +15,7 @@ public class ApiExceptionHandler {
 		responseError.message(apiExcepiton.getMessage());
 		responseError.httpStatus(apiExcepiton.getHttpStatus().value());
 		responseError.timeStamp(System.currentTimeMillis());
-		return ResponseEntity.status(apiExcepiton.getHttpStatus()).body(error.build());
+		return ResponseEntity.status(apiExcepiton.getHttpStatus()).body(responseError.build());
 	}
 	
 }

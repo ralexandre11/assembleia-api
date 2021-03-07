@@ -3,7 +3,6 @@ package com.ribeiro.assembleiaapi.service.impl;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.ribeiro.assembleiaapi.exception.ApiException;
@@ -34,16 +33,10 @@ public class MemberServiceImpl implements MemberService {
 	 */
 	@Override
 	public MemberDTO save(MemberDTO dto) {
-		try {
-			Member member = MemberMapper.fromDTO(dto);
+		Member member = MemberMapper.fromDTO(dto);
 
-			Member memberSaved = memberRepository.save(member);
-			return MemberMapper.toDTO(memberSaved);
-		} catch (ApiException a) {
-			throw new ApiException(a.getMessage(), HttpStatus.BAD_REQUEST);
-		} catch (Exception e) {
-			throw new ApiException(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+		Member memberSaved = memberRepository.save(member);
+		return MemberMapper.toDTO(memberSaved);
 	}
 
 	/**
@@ -54,17 +47,11 @@ public class MemberServiceImpl implements MemberService {
 	 */
 	@Override
 	public MemberDTO update(Long id, MemberDTO dto) {
-		try {
-			getById(id);
-			Member member = MemberMapper.fromDTO(dto);
-			member.setId(id);
-			Member memberSaved = memberRepository.save(member);
-			return MemberMapper.toDTO(memberSaved);
-		} catch (ApiException a) {
-			throw new ApiException(a.getMessage(), HttpStatus.BAD_REQUEST);
-		} catch (Exception e) {
-			throw new ApiException("Internal Error!", HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+		getById(id);
+		Member member = MemberMapper.fromDTO(dto);
+		member.setId(id);
+		Member memberSaved = memberRepository.save(member);
+		return MemberMapper.toDTO(memberSaved);
 	}
 
 	/**
@@ -72,14 +59,9 @@ public class MemberServiceImpl implements MemberService {
 	 */
 	@Override
 	public void delete(Long id) {
-		try {
-			getById(id);
-			memberRepository.deleteById(id);
-		} catch (ApiException a) {
-			throw new ApiException(a.getMessage(), HttpStatus.BAD_REQUEST);
-		} catch (Exception e) {
-			throw new ApiException("Internal Error!", HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+		getById(id);
+
+		memberRepository.deleteById(id);
 	}
 
 	/**
@@ -88,12 +70,9 @@ public class MemberServiceImpl implements MemberService {
 	 */
 	@Override
 	public List<MemberDTO> getAll() {
-		try {
-			List<Member> members = memberRepository.findAllByOrderByIdAsc();
-			return MemberMapper.toDtoList(members);
-		} catch (Exception e) {
-			throw new ApiException("Internal Error!", HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+		List<Member> members = memberRepository.findAllByOrderByIdAsc();
+
+		return MemberMapper.toDtoList(members);
 	}
 
 	/**
@@ -101,16 +80,11 @@ public class MemberServiceImpl implements MemberService {
 	 */
 	@Override
 	public Member getById(Long id) {
-		try {
-			Optional<Member> member = memberRepository.findById(id);
-			if (member.isPresent()) {
-				return member.get();
-			}
-			throw new ApiException("Member Not Found.", HttpStatus.NOT_FOUND);
-		} catch (ApiException a) {
-			throw new ApiException(a.getMessage(), HttpStatus.BAD_REQUEST);
-		} catch (Exception e) {
-			throw new ApiException("Internal Error!", HttpStatus.INTERNAL_SERVER_ERROR);
+		Optional<Member> member = memberRepository.findById(id);
+		if (member.isPresent()) {
+			return member.get();
+		} else {
+			throw new ApiException("Member Not Found");
 		}
 	}
 
@@ -119,8 +93,7 @@ public class MemberServiceImpl implements MemberService {
 	 */
 	@Override
 	public Member getByCpf(Long cpf) {
-		Member member = memberRepository.findByCpf(cpf);
-		return member;
+		return memberRepository.findByCpf(cpf);
 	}
 
 }

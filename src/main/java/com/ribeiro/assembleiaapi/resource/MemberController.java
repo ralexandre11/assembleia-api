@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ribeiro.assembleiaapi.exception.ApiException;
+import com.ribeiro.assembleiaapi.exception.ApiExceptionController;
 import com.ribeiro.assembleiaapi.model.dto.MemberDTO;
 import com.ribeiro.assembleiaapi.resource.dto.ResponseDTO;
 import com.ribeiro.assembleiaapi.service.MemberService;
@@ -53,12 +55,17 @@ public class MemberController {
 	@PostMapping
 	@Operation(summary = "Add a new member")
 	public ResponseEntity<ResponseDTO> createMember(@RequestBody MemberDTO dto) {
-		
-		MemberDTO dtoSaved = service.save(dto);
-		
-		ResponseDTO response = new ResponseDTO("Created Member! ID: " + dtoSaved.getId());
-		
-		return ResponseEntity.status(HttpStatus.CREATED).body(response);
+		try {
+			MemberDTO dtoSaved = service.save(dto);
+			ResponseDTO response = new ResponseDTO("Created Member! ID: " + dtoSaved.getId());
+			
+			return ResponseEntity.status(HttpStatus.CREATED).body(response);
+		} catch (ApiExceptionController e) {
+			ResponseDTO response = new ResponseDTO(e.getMessage());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response );
+		} catch (Exception e) {
+			throw new ApiExceptionController("Internal Error!", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	/**
@@ -72,12 +79,20 @@ public class MemberController {
 	public ResponseEntity<ResponseDTO> updateMember(
 			@Parameter(description = "Member ID") 
 			@PathVariable("id") Long id, @RequestBody MemberDTO dto) {
-
-		MemberDTO dtoSaved = service.update(id, dto);
-		
-		ResponseDTO response = new ResponseDTO("Updated Member! ID: " + dtoSaved.getId());
-		
-		return ResponseEntity.status(HttpStatus.OK).body(response);
+		try {
+			MemberDTO dtoSaved = service.update(id, dto);
+			ResponseDTO response = new ResponseDTO("Updated Member! ID: " + dtoSaved.getId());
+			
+			return ResponseEntity.status(HttpStatus.OK).body(response);
+		} catch (ApiException e) {
+			ResponseDTO response = new ResponseDTO(e.getMessage());
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+		} catch (ApiExceptionController e) {
+			ResponseDTO response = new ResponseDTO(e.getMessage());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+		} catch (Exception e) {
+			throw new ApiExceptionController("Internal Error!", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	
 	/**
@@ -90,12 +105,20 @@ public class MemberController {
 	public ResponseEntity<ResponseDTO> deleteMember(
 			@Parameter(description = "Member ID") 
 			@PathVariable("id") Long id) {
-
-		service.delete(id);
-		
-		ResponseDTO response = new ResponseDTO("Deleted Member!");
-		
-		return ResponseEntity.status(HttpStatus.OK).body(response);
+		try {
+			service.delete(id);
+			ResponseDTO response = new ResponseDTO("Deleted Member!");
+			
+			return ResponseEntity.status(HttpStatus.OK).body(response);
+		} catch (ApiException e) {
+			ResponseDTO response = new ResponseDTO(e.getMessage());
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+		} catch (ApiExceptionController e) {
+			ResponseDTO response = new ResponseDTO(e.getMessage());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response );
+		} catch (Exception e) {
+			throw new ApiExceptionController("Internal Error!", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 
