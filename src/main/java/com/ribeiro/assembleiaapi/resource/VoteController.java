@@ -21,7 +21,9 @@ import lombok.RequiredArgsConstructor;
 
 /**
  * Class responsible for making the endpoint available: "/vote"
- * @author Ricardo Ribeiro (https://www.linkedin.com/in/ricardoalexandreribeiro/)
+ * 
+ * @author Ricardo Ribeiro
+ *         (https://www.linkedin.com/in/ricardoalexandreribeiro/)
  * @since 01/03/2021
  *
  */
@@ -34,6 +36,7 @@ public class VoteController {
 
 	/**
 	 * Method to return the voting result
+	 * 
 	 * @param idAgenda
 	 * @return VoteResultDTO
 	 */
@@ -41,35 +44,34 @@ public class VoteController {
 	@Operation(summary = "Return the voting result")
 	public ResponseEntity<VoteResultDTO> votingResult(@PathVariable("idAgenda") Long idAgenda) {
 		VoteResultDTO votingResult = service.getResultVotes(idAgenda);
-		
+
 		return ResponseEntity.status(HttpStatus.OK).body(votingResult);
 	}
-	
+
 	/**
 	 * Method for registering a new vote
+	 * 
 	 * @param dto
 	 * @return ResponseDTO
 	 */
 	@PostMapping()
 	@Operation(summary = "Register a new vote")
-	//TODO: Path could be /agendas/{idAgenda}/vote and DTO only:
+	// TODO: Path could be /agendas/{idAgenda}/vote and DTO only:
 	// {cpf: 1111111111, value: YES}
-	//TODO: a vote can be changed?
+	// TODO: a vote can be changed?
 	public ResponseEntity<ResponseDTO> createVote(@RequestBody VoteDTO dto) {
 		try {
 			service.registerVote(dto);
-			
+
 			ResponseDTO response = new ResponseDTO("Vote successfully registered!");
-			
-			//TODO: could be NO_CONTENT
+
+			// TODO: could be NO_CONTENT
 			return ResponseEntity.status(HttpStatus.CREATED).body(response);
 		} catch (ApiException e) {
 			ResponseDTO response = new ResponseDTO(e.getMessage());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-		} catch (ApiExceptionController e) {
-			ResponseDTO response = new ResponseDTO(e.getMessage());
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response );
 		} catch (Exception e) {
+			// TODO what's the diff between ApiException and ApiExceptionController
 			throw new ApiExceptionController("Internal Error!", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
