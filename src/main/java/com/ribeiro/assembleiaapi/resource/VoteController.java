@@ -56,20 +56,19 @@ public class VoteController {
 	 */
 	@PostMapping()
 	@Operation(summary = "Register a new vote")
-	// TODO: Path could be /agendas/{idAgenda}/vote and DTO only:
-	// {cpf: 1111111111, value: YES}
-	// TODO: a vote can be changed?
 	public ResponseEntity<ResponseDTO> createVote(@RequestBody VoteDTO dto) {
 		try {
 			service.registerVote(dto);
 
 			ResponseDTO response = new ResponseDTO("Vote successfully registered!");
 
-			// TODO: could be NO_CONTENT
 			return ResponseEntity.status(HttpStatus.CREATED).body(response);
 		} catch (ApiException e) {
 			ResponseDTO response = new ResponseDTO(e.getMessage());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+		} catch (ApiExceptionController e) {
+			ResponseDTO response = new ResponseDTO(e.getMessage());
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response );
 		}
 	}
 }

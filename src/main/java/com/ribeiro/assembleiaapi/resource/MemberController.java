@@ -63,8 +63,6 @@ public class MemberController {
 		} catch (ApiExceptionController e) {
 			ResponseDTO response = new ResponseDTO(e.getMessage());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response );
-		} catch (Exception e) {
-			throw new ApiExceptionController("Internal Error!", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -90,8 +88,6 @@ public class MemberController {
 		} catch (ApiExceptionController e) {
 			ResponseDTO response = new ResponseDTO(e.getMessage());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-		} catch (Exception e) {
-			throw new ApiExceptionController("Internal Error!", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
@@ -116,8 +112,6 @@ public class MemberController {
 		} catch (ApiExceptionController e) {
 			ResponseDTO response = new ResponseDTO(e.getMessage());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response );
-		} catch (Exception e) {
-			throw new ApiExceptionController("Internal Error!", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
