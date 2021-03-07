@@ -64,6 +64,7 @@ public class AgendaController {
 			//TODO ++ add location header
 			return ResponseEntity.status(HttpStatus.CREATED).body(response);
 		} catch (ApiExceptionController e) {
+			// TODO what's the diff between ApiException and ApiExceptionController
 			ResponseDTO response = new ResponseDTO(e.getMessage());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response );
 		} catch (Exception e) {

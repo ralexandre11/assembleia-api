@@ -70,9 +70,6 @@ public class VoteController {
 		} catch (ApiException e) {
 			ResponseDTO response = new ResponseDTO(e.getMessage());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-		} catch (Exception e) {
-			// TODO what's the diff between ApiException and ApiExceptionController
-			throw new ApiExceptionController("Internal Error!", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 }
