@@ -61,6 +61,7 @@ public class VoteController {
 			
 			ResponseDTO response = new ResponseDTO("Vote successfully registered!");
 			
+			//TODO: could be NO_CONTENT
 			return ResponseEntity.status(HttpStatus.CREATED).body(response);
 		} catch (ApiException e) {
 			ResponseDTO response = new ResponseDTO(e.getMessage());

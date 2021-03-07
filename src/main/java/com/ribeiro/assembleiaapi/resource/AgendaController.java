@@ -86,6 +86,8 @@ public class AgendaController {
 			@RequestBody AgendaExpirationDTO expiration) {
 		try {
 			AgendaDTO dtoSaved = service.update(id, AgendaDTO.builder().expiration(expiration.getExpiration()).build());
+			//TODO no need to return ID, already in the path
+			//TODO return expiration instead
 			ResponseDTO response = new ResponseDTO("Opened Session! ID: " + dtoSaved.getId());
 			
 			return ResponseEntity.status(HttpStatus.OK).body(response);
