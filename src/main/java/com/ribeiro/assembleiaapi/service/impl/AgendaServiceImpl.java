@@ -18,7 +18,9 @@ import lombok.AllArgsConstructor;
 
 /**
  * Class that implements the Agenda service layer
- * @author Ricardo Ribeiro (https://www.linkedin.com/in/ricardoalexandreribeiro/)
+ * 
+ * @author Ricardo Ribeiro
+ *         (https://www.linkedin.com/in/ricardoalexandreribeiro/)
  * @since 01/03/2021
  *
  */
@@ -30,22 +32,26 @@ public class AgendaServiceImpl implements AgendaService {
 
 	/**
 	 * Method to create new agenda
+	 * 
 	 * @param dto
 	 * @return AgendaDTO
 	 */
 	@Override
 	public AgendaDTO save(AgendaAddDTO dto) {
-		//TODO change mapper to be not static and change test AgendaServiceImplTest.givenDto_whenSave_thenAgendaIsSaved()
+			// TODO change mapper to be not static and change test
+			// AgendaServiceImplTest.givenDto_whenSave_thenAgendaIsSaved()
 		Agenda agenda = AgendaMapper.fromDTO(dto);
 		
 		Agenda agendaSaved = agendaRepository.save(agenda);
 		
-		//TODO change mapper to be not static and change test AgendaServiceImplTest.givenDto_whenSave_thenAgendaIsSaved()
+			// TODO change mapper to be not static and change test
+			// AgendaServiceImplTest.givenDto_whenSave_thenAgendaIsSaved()
 		return AgendaMapper.toDTO(agendaSaved);
 	}
 
 	/**
 	 * Method to Open new agenda session
+	 * 
 	 * @param id
 	 * @param dto
 	 * @return AgendaDTO
@@ -61,9 +67,10 @@ public class AgendaServiceImpl implements AgendaService {
 		Agenda agendaSaved = agendaRepository.save(agenda);
 		return AgendaMapper.toDTO(agendaSaved);
 	}
-	
+
 	/**
 	 * Method to return all agendas
+	 * 
 	 * @return List<AgendaDTO>
 	 */
 	@Override
@@ -75,10 +82,13 @@ public class AgendaServiceImpl implements AgendaService {
 
 	/**
 	 * Method to get agenda by ID
+	 * 
 	 * @param id
 	 * @return Agenda
 	 */
 	@Override
+	// TODO could return an Optional<Agenda> instead of exception because we don't
+	// know if an unexisting agenda should always return NOT_FOUND.
 	public Agenda getById(Long id) {
 		Optional<Agenda> agenda = agendaRepository.findById(id);
 		if (agenda.isPresent()) {
@@ -86,10 +96,13 @@ public class AgendaServiceImpl implements AgendaService {
 		} else {
 			throw new ApiException("Agenda Not Found");
 		}
+		// TODO could pass agenda id in the exception
+		throw new ApiException("Agenda Not Found.", HttpStatus.NOT_FOUND);
 	}
 
 	/**
 	 * Method to return a date plus one minute
+	 * 
 	 * @return Date
 	 */
 	private Date oneMinuteExpiration() {

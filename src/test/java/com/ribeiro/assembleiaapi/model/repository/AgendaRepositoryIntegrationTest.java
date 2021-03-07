@@ -1,5 +1,7 @@
 package com.ribeiro.assembleiaapi.model.repository;
 
+import java.util.Optional;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,7 +28,7 @@ class AgendaRepositoryIntegrationTest {
 	TestEntityManager testEntityManager;
 
 	@Test
-	void givenAgenda_whenSave_thenAgendaIsSaved() {
+	void givenDescription_whenSave_thenAgendaIsSaved() {
 		// Given
 		Agenda agenda = new Agenda();
 		agenda.setDescription("my description");
@@ -39,5 +41,25 @@ class AgendaRepositoryIntegrationTest {
 		Assertions.assertThat(agendaSaved.getDescription()).isEqualTo("my description");
 		Assertions.assertThat(agendaSaved.getExpiration()).isNull();
 		Assertions.assertThat(agendaSaved.getVotes()).isEmpty();
+	}
+
+	@Test
+	void givenExistingId_whenFindById_thenAgendaReturned() {
+		Agenda agenda = new Agenda();
+		agenda.setDescription("my description");
+		Agenda agendaSaved = repository.save(agenda);
+		testEntityManager.clear();
+
+		Optional<Agenda> actual = repository.findById(agendaSaved.getId());
+
+		Assertions.assertThat(actual).isPresent();
+	}
+
+	@Test
+	void givenUnexistingId_whenFindById_thenEmptyReturned() {
+
+		Optional<Agenda> agenda = repository.findById(1000L);
+
+		Assertions.assertThat(agenda).isEmpty();
 	}
 }
