@@ -21,7 +21,9 @@ import lombok.RequiredArgsConstructor;
 
 /**
  * Class responsible for making the endpoint available: "/vote"
- * @author Ricardo Ribeiro (https://www.linkedin.com/in/ricardoalexandreribeiro/)
+ * 
+ * @author Ricardo Ribeiro
+ *         (https://www.linkedin.com/in/ricardoalexandreribeiro/)
  * @since 01/03/2021
  *
  */
@@ -34,6 +36,7 @@ public class VoteController {
 
 	/**
 	 * Method to return the voting result
+	 * 
 	 * @param idAgenda
 	 * @return VoteResultDTO
 	 */
@@ -41,12 +44,13 @@ public class VoteController {
 	@Operation(summary = "Return the voting result")
 	public ResponseEntity<VoteResultDTO> votingResult(@PathVariable("idAgenda") Long idAgenda) {
 		VoteResultDTO votingResult = service.getResultVotes(idAgenda);
-		
+
 		return ResponseEntity.status(HttpStatus.OK).body(votingResult);
 	}
-	
+
 	/**
 	 * Method for registering a new vote
+	 * 
 	 * @param dto
 	 * @return ResponseDTO
 	 */
@@ -55,9 +59,9 @@ public class VoteController {
 	public ResponseEntity<ResponseDTO> createVote(@RequestBody VoteDTO dto) {
 		try {
 			service.registerVote(dto);
-			
+
 			ResponseDTO response = new ResponseDTO("Vote successfully registered!");
-			
+
 			return ResponseEntity.status(HttpStatus.CREATED).body(response);
 		} catch (ApiException e) {
 			ResponseDTO response = new ResponseDTO(e.getMessage());
