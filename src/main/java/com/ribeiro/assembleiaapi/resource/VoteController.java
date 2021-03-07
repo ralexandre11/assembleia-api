@@ -52,9 +52,6 @@ public class VoteController {
 	 */
 	@PostMapping()
 	@Operation(summary = "Register a new vote")
-	//TODO: Path could be /agendas/{idAgenda}/vote and DTO only:
-	// {cpf: 1111111111, value: YES}
-	//TODO: a vote can be changed?
 	public ResponseEntity<ResponseDTO> createVote(@RequestBody VoteDTO dto) {
 		try {
 			service.registerVote(dto);
@@ -68,8 +65,6 @@ public class VoteController {
 		} catch (ApiExceptionController e) {
 			ResponseDTO response = new ResponseDTO(e.getMessage());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response );
-		} catch (Exception e) {
-			throw new ApiExceptionController("Internal Error!", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 }

@@ -61,7 +61,6 @@ public class AgendaController {
 			AgendaDTO dtoSaved = service.save(agendaAddDto);
 			ResponseDTO response = new ResponseDTO("Created Agenda! ID: " + dtoSaved.getId());
 	
-			//TODO ++ add location header
 			return ResponseEntity.status(HttpStatus.CREATED).body(response);
 		} catch (ApiExceptionController e) {
 			ResponseDTO response = new ResponseDTO(e.getMessage());
