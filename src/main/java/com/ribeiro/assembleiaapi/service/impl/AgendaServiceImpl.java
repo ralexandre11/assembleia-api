@@ -20,7 +20,9 @@ import lombok.AllArgsConstructor;
 
 /**
  * Class that implements the Agenda service layer
- * @author Ricardo Ribeiro (https://www.linkedin.com/in/ricardoalexandreribeiro/)
+ * 
+ * @author Ricardo Ribeiro
+ *         (https://www.linkedin.com/in/ricardoalexandreribeiro/)
  * @since 01/03/2021
  *
  */
@@ -32,30 +34,34 @@ public class AgendaServiceImpl implements AgendaService {
 
 	/**
 	 * Method to create new agenda
+	 * 
 	 * @param dto
 	 * @return AgendaDTO
 	 */
 	@Override
 	public AgendaDTO save(AgendaAddDTO dto) {
 		try {
-			//TODO change mapper to be not static and change test AgendaServiceImplTest.givenDto_whenSave_thenAgendaIsSaved()
+			// TODO change mapper to be not static and change test
+			// AgendaServiceImplTest.givenDto_whenSave_thenAgendaIsSaved()
 			Agenda agenda = AgendaMapper.fromDTO(dto);
-			
+
 			Agenda agendaSaved = agendaRepository.save(agenda);
-			
-			//TODO change mapper to be not static and change test AgendaServiceImplTest.givenDto_whenSave_thenAgendaIsSaved()
+
+			// TODO change mapper to be not static and change test
+			// AgendaServiceImplTest.givenDto_whenSave_thenAgendaIsSaved()
 			return AgendaMapper.toDTO(agendaSaved);
 		} catch (ApiException a) {
-			//TODO review: only throw, could be removed
+			// TODO review: only throw, could be removed
 			throw a;
 		} catch (Exception e) {
-			//TOD review: service should not know HttpStatus!!!
+			// TOD review: service should not know HttpStatus!!!
 			throw new ApiException("Internal Error!", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
 	/**
 	 * Method to Open new agenda session
+	 * 
 	 * @param id
 	 * @param dto
 	 * @return AgendaDTO
@@ -64,7 +70,7 @@ public class AgendaServiceImpl implements AgendaService {
 	public AgendaDTO update(Long id, AgendaDTO dto) {
 		try {
 			Agenda agenda = this.getById(id);
-			if(dto.getExpiration() == null)	{
+			if (dto.getExpiration() == null) {
 				agenda.setExpiration(oneMinuteExpiration());
 			} else {
 				agenda.setExpiration(dto.getExpiration());
@@ -77,42 +83,43 @@ public class AgendaServiceImpl implements AgendaService {
 			throw new ApiException("Internal Error!", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+
 	/**
 	 * Method to return all agendas
+	 * 
 	 * @return List<AgendaDTO>
 	 */
 	@Override
 	public List<AgendaDTO> getAll() {
 		try {
-			List<Agenda> agendas =  agendaRepository.findAll();
-			return AgendaMapper.toDtoList(agendas); 
+			List<Agenda> agendas = agendaRepository.findAll();
+			return AgendaMapper.toDtoList(agendas);
 		} catch (Exception e) {
-			return new ArrayList<>();		}
-	}
-
-	/**
-	 * Method to get agenda by ID
-	 * @param id
-	 * @return Agenda
-	 */
-	@Override
-	public Agenda getById(Long id) {
-		try {
-			Optional<Agenda> agenda = agendaRepository.findById(id);
-			if (agenda.isPresent()) {
-				return agenda.get();
-			}
-			throw new ApiException("Agenda Not Found.", HttpStatus.NOT_FOUND);
-		} catch (ApiException a) {
-			throw a;
-		} catch (Exception e) {
-			throw new ApiException("Internal Error!", HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ArrayList<>();
 		}
 	}
 
 	/**
+	 * Method to get agenda by ID
+	 * 
+	 * @param id
+	 * @return Agenda
+	 */
+	@Override
+	// TODO could return an Optional<Agenda> instead of exception because we don't
+	// know if an unexisting agenda should always return NOT_FOUND.
+	public Agenda getById(Long id) {
+		Optional<Agenda> agenda = agendaRepository.findById(id);
+		if (agenda.isPresent()) {
+			return agenda.get();
+		}
+		// TODO could pass agenda id in the exception
+		throw new ApiException("Agenda Not Found.", HttpStatus.NOT_FOUND);
+	}
+
+	/**
 	 * Method to return a date plus one minute
+	 * 
 	 * @return Date
 	 */
 	private Date oneMinuteExpiration() {

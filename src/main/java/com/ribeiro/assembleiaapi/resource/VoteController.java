@@ -51,6 +51,9 @@ public class VoteController {
 	 */
 	@PostMapping
 	@Operation(summary = "Register a new vote")
+	//TODO: Path could be /agendas/{idAgenda}/vote and DTO only:
+	// {cpf: 1111111111, value: YES}
+	//TODO: a vote can be changed?
 	public ResponseEntity<ResponseDTO> createVote(@RequestBody VoteDTO dto) {
 		
 		service.registerVote(dto);
