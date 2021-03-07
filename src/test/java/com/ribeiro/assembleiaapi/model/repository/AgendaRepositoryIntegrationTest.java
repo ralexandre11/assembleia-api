@@ -35,6 +35,6 @@ class AgendaRepositoryIntegrationTest {
 		Assertions.assertThat(agendaSaved.getId()).isNotNull();
 		Assertions.assertThat(agendaSaved.getDescription()).isEqualTo("my description");
 		Assertions.assertThat(agendaSaved.getExpiration()).isNull();
-		Assertions.assertThat(agendaSaved.getVotes()).hasSize(0);
+		Assertions.assertThat(agendaSaved.getVotes()).isEmpty();
 	}
 }
