@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ribeiro.assembleiaapi.exception.ApiException;
 import com.ribeiro.assembleiaapi.model.dto.MemberDTO;
@@ -32,6 +33,7 @@ public class MemberServiceImpl implements MemberService {
 	 * @return MemberDTO
 	 */
 	@Override
+	@Transactional
 	public MemberDTO save(MemberDTO dto) {
 		Member member = MemberMapper.fromDTO(dto);
 
@@ -46,6 +48,7 @@ public class MemberServiceImpl implements MemberService {
 	 * @return MemberDTO
 	 */
 	@Override
+	@Transactional
 	public MemberDTO update(Long id, MemberDTO dto) {
 		getById(id);
 		Member member = MemberMapper.fromDTO(dto);
@@ -58,6 +61,7 @@ public class MemberServiceImpl implements MemberService {
 	 * Method for deleting an existing Member
 	 */
 	@Override
+	@Transactional
 	public void delete(Long id) {
 		getById(id);
 

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ribeiro.assembleiaapi.exception.ApiException;
 import com.ribeiro.assembleiaapi.model.dto.AgendaAddDTO;
@@ -37,6 +38,7 @@ public class AgendaServiceImpl implements AgendaService {
 	 * @return AgendaDTO
 	 */
 	@Override
+	@Transactional
 	public AgendaDTO save(AgendaAddDTO dto) {
 			// TODO change mapper to be not static and change test
 			// AgendaServiceImplTest.givenDto_whenSave_thenAgendaIsSaved()
@@ -57,6 +59,7 @@ public class AgendaServiceImpl implements AgendaService {
 	 * @return AgendaDTO
 	 */
 	@Override
+	@Transactional
 	public AgendaDTO update(Long id, AgendaDTO dto) {
 		Agenda agenda = this.getById(id);
 		if(dto.getExpiration() == null)	{
@@ -96,8 +99,6 @@ public class AgendaServiceImpl implements AgendaService {
 		} else {
 			throw new ApiException("Agenda Not Found");
 		}
-		// TODO could pass agenda id in the exception
-		throw new ApiException("Agenda Not Found.", HttpStatus.NOT_FOUND);
 	}
 
 	/**
