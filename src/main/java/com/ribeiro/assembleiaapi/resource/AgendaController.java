@@ -61,6 +61,16 @@ public class AgendaController {
 			@Parameter(description = "Description agenda") @RequestBody AgendaAddDTO agendaAddDto) {
 
 		AgendaDTO dtoSaved = service.save(agendaAddDto);
+// 		try {
+// 			AgendaDTO dtoSaved = service.save(agendaAddDto);
+// 			ResponseDTO response = new ResponseDTO("Created Agenda! ID: " + dtoSaved.getId());
+	
+// 			return ResponseEntity.status(HttpStatus.CREATED).body(response);
+// 		} catch (ApiExceptionController e) {
+// 			// TODO what's the diff between ApiException and ApiExceptionController
+// 			ResponseDTO response = new ResponseDTO(e.getMessage());
+// 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response );
+// 		}
 
 		// TODO ++ add location header
 		return ResponseEntity.status(HttpStatus.CREATED).body(dtoSaved);
