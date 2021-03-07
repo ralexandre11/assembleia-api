@@ -12,7 +12,6 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.HttpStatus;
 
 import com.ribeiro.assembleiaapi.exception.ApiException;
 import com.ribeiro.assembleiaapi.model.dto.AgendaAddDTO;
@@ -70,6 +69,6 @@ class AgendaServiceImplTest {
 
 		Assertions.assertThat(actual).isInstanceOf(ApiException.class);
 		ApiException apiException = (ApiException) actual;
-		Assertions.assertThat(apiException.getHttpStatus()).isEqualTo(HttpStatus.NOT_FOUND);
+		Assertions.assertThat(apiException.getMessage()).isEqualTo("Agenda Not Found");
 	}
 }
