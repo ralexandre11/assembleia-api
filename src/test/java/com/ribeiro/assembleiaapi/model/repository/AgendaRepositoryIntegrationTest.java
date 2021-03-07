@@ -27,11 +27,14 @@ class AgendaRepositoryIntegrationTest {
 
 	@Test
 	void givenAgenda_whenSave_thenAgendaIsSaved() {
+		// Given
 		Agenda agenda = new Agenda();
 		agenda.setDescription("my description");
 
+		// When
 		Agenda agendaSaved = repository.save(agenda);
 
+		// Then
 		Assertions.assertThat(agendaSaved.getId()).isNotNull();
 		Assertions.assertThat(agendaSaved.getDescription()).isEqualTo("my description");
 		Assertions.assertThat(agendaSaved.getExpiration()).isNull();
