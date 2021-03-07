@@ -26,6 +26,8 @@ import lombok.AllArgsConstructor;
 public class MemberServiceImpl implements MemberService {
 
 	private final MemberRepository memberRepository;
+	
+	private final MemberMapper memberMaper;
 
 	/**
 	 * Method to save a new Member
@@ -35,10 +37,10 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	@Transactional
 	public MemberDTO save(MemberDTO dto) {
-		Member member = MemberMapper.fromDTO(dto);
+		Member member = memberMaper.fromDTO(dto);
 
 		Member memberSaved = memberRepository.save(member);
-		return MemberMapper.toDTO(memberSaved);
+		return memberMaper.toDTO(memberSaved);
 	}
 
 	/**
@@ -51,10 +53,10 @@ public class MemberServiceImpl implements MemberService {
 	@Transactional
 	public MemberDTO update(Long id, MemberDTO dto) {
 		getById(id);
-		Member member = MemberMapper.fromDTO(dto);
+		Member member = memberMaper.fromDTO(dto);
 		member.setId(id);
 		Member memberSaved = memberRepository.save(member);
-		return MemberMapper.toDTO(memberSaved);
+		return memberMaper.toDTO(memberSaved);
 	}
 
 	/**
@@ -76,7 +78,7 @@ public class MemberServiceImpl implements MemberService {
 	public List<MemberDTO> getAll() {
 		List<Member> members = memberRepository.findAllByOrderByIdAsc();
 
-		return MemberMapper.toDtoList(members);
+		return memberMaper.toDtoList(members);
 	}
 
 	/**

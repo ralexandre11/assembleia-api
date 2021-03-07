@@ -8,16 +8,19 @@ import org.springframework.beans.BeanUtils;
 import com.ribeiro.assembleiaapi.model.dto.MemberDTO;
 import com.ribeiro.assembleiaapi.model.entity.Member;
 
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
 public class MemberMapper {
 
-	public static Member fromDTO(MemberDTO memberDTO) {
+	public Member fromDTO(MemberDTO memberDTO) {
 		Member member = new Member();
 		member.setName(memberDTO.getName());
 		member.setCpf(memberDTO.getCpf());
 		return member;
 	}
 
-	public static MemberDTO toDTO(Member member) {
+	public MemberDTO toDTO(Member member) {
 		MemberDTO dto = new MemberDTO();
 		dto.setId(member.getId());
 		dto.setName(member.getName());
@@ -25,7 +28,7 @@ public class MemberMapper {
 		return dto;
 	}
 
-	public static List<MemberDTO> toDtoList(List<Member> members) {
+	public List<MemberDTO> toDtoList(List<Member> members) {
 		List<MemberDTO> memberDtos = new ArrayList<>();
 		for (Member member : members) {
 			MemberDTO dto = new MemberDTO();
