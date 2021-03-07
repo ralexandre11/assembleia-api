@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Component;
 
 import com.ribeiro.assembleiaapi.model.dto.MemberDTO;
 import com.ribeiro.assembleiaapi.model.entity.Member;
@@ -11,6 +12,7 @@ import com.ribeiro.assembleiaapi.model.entity.Member;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
+@Component
 public class MemberMapper {
 
 	public Member fromDTO(MemberDTO memberDTO) {

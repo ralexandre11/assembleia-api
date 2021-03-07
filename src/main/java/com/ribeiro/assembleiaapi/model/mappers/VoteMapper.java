@@ -3,14 +3,20 @@ package com.ribeiro.assembleiaapi.model.mappers;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.ribeiro.assembleiaapi.model.dto.VoteDTO;
 import com.ribeiro.assembleiaapi.model.entity.Agenda;
 import com.ribeiro.assembleiaapi.model.entity.Member;
 import com.ribeiro.assembleiaapi.model.entity.Vote;
 
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@Component
 public class VoteMapper {
 	
-	public static Vote fromDTO(VoteDTO voteDTO, Agenda agenda, Member member) {
+	public Vote fromDTO(VoteDTO voteDTO, Agenda agenda, Member member) {
 		Vote vote = new Vote();
 		vote.setAgenda(agenda);
 		vote.setMember(member);
@@ -18,16 +24,7 @@ public class VoteMapper {
 		return vote;
 	}
 	
-//	public static VoteDTO toDTO(Vote vote) {
-//		VoteDTO dto = new VoteDTO();
-//		dto.setId(vote.getId());
-//		dto.setName(vote.getName());
-//		dto.setCpf(vote.getCpf());
-//		return dto;
-//	}
-//	
-
-	public static List<VoteDTO> toDtoList(List<Vote> votes) {
+	public List<VoteDTO> toDtoList(List<Vote> votes) {
 		List<VoteDTO> voteDTOs = new ArrayList<>();
 		for (Vote vote : votes) {
 			VoteDTO dto = new VoteDTO();

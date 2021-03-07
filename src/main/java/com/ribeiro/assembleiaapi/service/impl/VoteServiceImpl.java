@@ -32,6 +32,8 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class VoteServiceImpl implements VoteService {
 
+	private final VoteMapper voteMapper;
+	
 	private final AgendaService agendaService;
 	
 	private final MemberService memberService;
@@ -82,7 +84,7 @@ public class VoteServiceImpl implements VoteService {
 		// Check if member has already voted
 		alredyVoteCpfAgenda(agenda, member);
 		
-		return VoteMapper.fromDTO(voteDto, agenda, member);
+		return voteMapper.fromDTO(voteDto, agenda, member);
 	}
 	
 

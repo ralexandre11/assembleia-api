@@ -3,16 +3,21 @@ package com.ribeiro.assembleiaapi.model.mappers;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.ribeiro.assembleiaapi.model.dto.AgendaAddDTO;
 import com.ribeiro.assembleiaapi.model.dto.AgendaDTO;
 import com.ribeiro.assembleiaapi.model.dto.VoteDTO;
 import com.ribeiro.assembleiaapi.model.entity.Agenda;
 
-import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
-@NoArgsConstructor
+@AllArgsConstructor
+@Component
 public class AgendaMapper {
 
+	private final VoteMapper voteMapper;
+	
 	public Agenda fromDTO(AgendaAddDTO dto) {
 		Agenda agenda = new Agenda();
 		agenda.setDescription(dto.getDescription());
@@ -23,7 +28,7 @@ public class AgendaMapper {
 
 	public AgendaDTO toDTO(Agenda agenda) {
 		AgendaDTO dto = new AgendaDTO();
-		List<VoteDTO> votes = VoteMapper.toDtoList(agenda.getVotes());
+		List<VoteDTO> votes = voteMapper.toDtoList(agenda.getVotes());
 		dto.setId(agenda.getId());
 		dto.setDescription(agenda.getDescription());
 		dto.setExpiration(agenda.getExpiration());
@@ -35,7 +40,7 @@ public class AgendaMapper {
 		List<AgendaDTO> agendaDtos = new ArrayList<>();
 		for (Agenda agenda : agendas) {
 			AgendaDTO dto = new AgendaDTO();
-			List<VoteDTO> voteDtos = VoteMapper.toDtoList(agenda.getVotes());
+			List<VoteDTO> voteDtos = voteMapper.toDtoList(agenda.getVotes());
 			dto.setId(agenda.getId());
 			dto.setDescription(agenda.getDescription());
 			dto.setExpiration(agenda.getExpiration());
