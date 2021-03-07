@@ -14,8 +14,6 @@ public interface AgendaService {
 
 	List<AgendaDTO> getAll();
 
-	// TODO: service does not have a consistent interface, sometimes returns
-	// AgendaDTO, sometimes returns Agenda
 	Agenda getById(Long id);
 
 }

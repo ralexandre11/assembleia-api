@@ -69,7 +69,7 @@ class AgendaControllerTest {
 		// Then
 		Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
 		ResponseDTO responseDTO = response.getBody();
-		Assertions.assertThat(responseDTO.getMessage()).isEqualTo("Opened Session! ID: 1");
+		Assertions.assertThat(responseDTO.getMessage()).isEqualTo("Opened Session!");
 	}
 
 }

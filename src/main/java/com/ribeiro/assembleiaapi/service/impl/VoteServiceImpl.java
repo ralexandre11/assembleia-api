@@ -75,13 +75,11 @@ public class VoteServiceImpl implements VoteService {
 		Agenda agenda = agendaService.getById(voteDto.getIdAgenda());
 		isOpenedAgenda(agenda);
 
-		//TODO could be done after check the member, since validating cpf is more expensive (rest call vs db access)
-		// Call Api and Check if Cpf is able
-		isCpfAble(voteDto.getCpf());
-
-		//TODO since we now validate CPF we still need to have the member registered? 
 		// Check if member exist
 		Member member = existCpf(voteDto.getCpf());
+		
+		// Call Api and Check if Cpf is able
+		isCpfAble(voteDto.getCpf());
 		
 		// Check if member has already voted
 		alredyVoteCpfAgenda(agenda, member);

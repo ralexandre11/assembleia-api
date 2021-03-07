@@ -39,12 +39,19 @@ class AgendaServiceImplTest {
 
 	@Test
 	void givenDto_whenSave_thenAgendaIsSaved() {
-		AgendaAddDTO agendaAddDTO = new AgendaAddDTO("my description");
+		// Given
+		AgendaAddDTO agendaAddDto = new AgendaAddDTO("my description");
+		AgendaDTO SavedAgendaDto = new AgendaDTO(1L, "my description ", new Date(), Collections.emptyList());
+		Agenda agendaBeforeSave = new Agenda(null, "my description", null, null);
 		Agenda agenda = new Agenda(1L, "my description ", new Date(), Collections.emptyList());
 		Mockito.when(agendaRepository.save(Mockito.any())).thenReturn(agenda);
+		Mockito.when(agendaMapper.fromDTO(Mockito.any())).thenReturn(agendaBeforeSave);
+		Mockito.when(agendaMapper.toDTO(Mockito.any())).thenReturn(SavedAgendaDto);
 
-		AgendaDTO agendaDTO = agendaService.save(agendaAddDTO);
+		// When
+		AgendaDTO agendaDTO = agendaService.save(agendaAddDto);
 
+		// Then
 		ArgumentCaptor<Agenda> agendaCaptor = ArgumentCaptor.forClass(Agenda.class);
 		Mockito.verify(agendaRepository).save(agendaCaptor.capture());
 		Assertions.assertThat(agendaCaptor.getValue().getDescription()).isEqualTo("my description");
@@ -57,20 +64,26 @@ class AgendaServiceImplTest {
 
 	@Test
 	void givenExistingId_whenGetByID_thenAgendaReturned() {
-		Agenda agenda = new Agenda(1L, "my description ", new Date(), Collections.emptyList());
+		// Given
+		Agenda agenda = new Agenda(1L, "my description", new Date(), Collections.emptyList());
 		Mockito.when(agendaRepository.findById(1L)).thenReturn(Optional.of(agenda));
 
+		// When
 		Agenda actual = agendaService.getById(1L);
 
+		// Then
 		Assertions.assertThat(actual).isSameAs(agenda);
 	}
 
 	@Test
 	void givenUnexistingId_whenGetByID_thenThrowsNotFoundException() {
+		// Given
 		Mockito.when(agendaRepository.findById(1L)).thenReturn(Optional.empty());
 
+		// When
 		Throwable actual = Assertions.catchThrowable(() -> agendaService.getById(1L));
 
+		// Then
 		Assertions.assertThat(actual).isInstanceOf(ApiException.class);
 		ApiException apiException = (ApiException) actual;
 		Assertions.assertThat(apiException.getMessage()).isEqualTo("Agenda Not Found");

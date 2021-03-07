@@ -42,14 +42,11 @@ public class AgendaServiceImpl implements AgendaService {
 	@Override
 	@Transactional
 	public AgendaDTO save(AgendaAddDTO dto) {
-			// TODO change mapper to be not static and change test
-			// AgendaServiceImplTest.givenDto_whenSave_thenAgendaIsSaved()
+		validateDescription(dto.getDescription());
 		Agenda agenda = agendaMapper.fromDTO(dto);
 		
 		Agenda agendaSaved = agendaRepository.save(agenda);
 		
-			// TODO change mapper to be not static and change test
-			// AgendaServiceImplTest.givenDto_whenSave_thenAgendaIsSaved()
 		return agendaMapper.toDTO(agendaSaved);
 	}
 
@@ -93,8 +90,6 @@ public class AgendaServiceImpl implements AgendaService {
 	 * @return Agenda
 	 */
 	@Override
-	// TODO could return an Optional<Agenda> instead of exception because we don't
-	// know if an unexisting agenda should always return NOT_FOUND.
 	public Agenda getById(Long id) {
 		Optional<Agenda> agenda = agendaRepository.findById(id);
 		if (agenda.isPresent()) {
@@ -104,6 +99,12 @@ public class AgendaServiceImpl implements AgendaService {
 		}
 	}
 
+	private void validateDescription(String description) {
+		if(description.length() > 50) {
+			throw new ApiException("Invalid Description!");
+		}
+	}
+	
 	/**
 	 * Method to return a date plus one minute
 	 * 
