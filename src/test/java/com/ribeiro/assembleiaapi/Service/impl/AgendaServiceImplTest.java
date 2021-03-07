@@ -16,6 +16,7 @@ import com.ribeiro.assembleiaapi.model.dto.AgendaAddDTO;
 import com.ribeiro.assembleiaapi.model.dto.AgendaDTO;
 import com.ribeiro.assembleiaapi.model.entity.Agenda;
 import com.ribeiro.assembleiaapi.model.repository.AgendaRepository;
+import com.ribeiro.assembleiaapi.service.impl.AgendaServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
 class AgendaServiceImplTest {
