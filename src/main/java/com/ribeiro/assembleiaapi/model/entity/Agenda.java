@@ -44,9 +44,12 @@ public class Agenda implements Serializable {
 	
 	@Column(name="expiration_date")
 	private Date expiration;
+
+	@Column(name="finished")
+	private boolean finished;
 	
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "id_agenda")
 	private List<Vote> votes = new ArrayList<>();
-
+	
 }

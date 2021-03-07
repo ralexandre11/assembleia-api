@@ -42,8 +42,8 @@ class AgendaServiceImplTest {
 		// Given
 		AgendaAddDTO agendaAddDto = new AgendaAddDTO("my description");
 		AgendaDTO SavedAgendaDto = new AgendaDTO(1L, "my description ", new Date(), Collections.emptyList());
-		Agenda agendaBeforeSave = new Agenda(null, "my description", null, null);
-		Agenda agenda = new Agenda(1L, "my description ", new Date(), Collections.emptyList());
+		Agenda agendaBeforeSave = new Agenda(null, "my description", null, false, null);
+		Agenda agenda = new Agenda(1L, "my description ", new Date(), false, Collections.emptyList());
 		Mockito.when(agendaRepository.save(Mockito.any())).thenReturn(agenda);
 		Mockito.when(agendaMapper.fromDTO(Mockito.any())).thenReturn(agendaBeforeSave);
 		Mockito.when(agendaMapper.toDTO(Mockito.any())).thenReturn(SavedAgendaDto);
@@ -65,7 +65,7 @@ class AgendaServiceImplTest {
 	@Test
 	void givenExistingId_whenGetByID_thenAgendaReturned() {
 		// Given
-		Agenda agenda = new Agenda(1L, "my description", new Date(), Collections.emptyList());
+		Agenda agenda = new Agenda(1L, "my description", new Date(), false, Collections.emptyList());
 		Mockito.when(agendaRepository.findById(1L)).thenReturn(Optional.of(agenda));
 
 		// When

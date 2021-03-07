@@ -41,7 +41,7 @@ public class VoteServiceImpl implements VoteService {
 	private final VoteRepository voteRepository;
 	
 	private final CpfApiService cpfApiService;
-		
+	
 	/**
 	 * Method for registering a new Vote by Member and Agenda
 	 */
