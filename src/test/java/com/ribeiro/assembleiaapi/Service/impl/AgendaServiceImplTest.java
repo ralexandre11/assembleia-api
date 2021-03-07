@@ -26,6 +26,7 @@ class AgendaServiceImplTest {
 
 	AgendaServiceImpl agendaService;
 	
+	@Mock
 	AgendaMapper agendaMapper;
 
 	@Mock
