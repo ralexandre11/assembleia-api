@@ -17,6 +17,7 @@ import com.ribeiro.assembleiaapi.exception.ApiException;
 import com.ribeiro.assembleiaapi.model.dto.AgendaAddDTO;
 import com.ribeiro.assembleiaapi.model.dto.AgendaDTO;
 import com.ribeiro.assembleiaapi.model.entity.Agenda;
+import com.ribeiro.assembleiaapi.model.mappers.AgendaMapper;
 import com.ribeiro.assembleiaapi.model.repository.AgendaRepository;
 import com.ribeiro.assembleiaapi.service.impl.AgendaServiceImpl;
 
@@ -24,13 +25,15 @@ import com.ribeiro.assembleiaapi.service.impl.AgendaServiceImpl;
 class AgendaServiceImplTest {
 
 	AgendaServiceImpl agendaService;
+	
+	AgendaMapper agendaMapper;
 
 	@Mock
 	AgendaRepository agendaRepository;
 
 	@BeforeEach
 	void setup() {
-		agendaService = new AgendaServiceImpl(agendaRepository);
+		agendaService = new AgendaServiceImpl(agendaRepository, agendaMapper);
 	}
 
 	@Test

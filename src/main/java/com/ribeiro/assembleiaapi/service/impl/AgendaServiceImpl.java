@@ -30,6 +30,8 @@ import lombok.AllArgsConstructor;
 public class AgendaServiceImpl implements AgendaService {
 
 	private final AgendaRepository agendaRepository;
+	
+	private final AgendaMapper agendaMapper;
 
 	/**
 	 * Method to create new agenda
@@ -42,13 +44,13 @@ public class AgendaServiceImpl implements AgendaService {
 	public AgendaDTO save(AgendaAddDTO dto) {
 			// TODO change mapper to be not static and change test
 			// AgendaServiceImplTest.givenDto_whenSave_thenAgendaIsSaved()
-		Agenda agenda = AgendaMapper.fromDTO(dto);
+		Agenda agenda = agendaMapper.fromDTO(dto);
 		
 		Agenda agendaSaved = agendaRepository.save(agenda);
 		
 			// TODO change mapper to be not static and change test
 			// AgendaServiceImplTest.givenDto_whenSave_thenAgendaIsSaved()
-		return AgendaMapper.toDTO(agendaSaved);
+		return agendaMapper.toDTO(agendaSaved);
 	}
 
 	/**
@@ -62,13 +64,14 @@ public class AgendaServiceImpl implements AgendaService {
 	@Transactional
 	public AgendaDTO update(Long id, AgendaDTO dto) {
 		Agenda agenda = this.getById(id);
+		
 		if(dto.getExpiration() == null)	{
 			agenda.setExpiration(oneMinuteExpiration());
 		} else {
 			agenda.setExpiration(dto.getExpiration());
 		}
 		Agenda agendaSaved = agendaRepository.save(agenda);
-		return AgendaMapper.toDTO(agendaSaved);
+		return agendaMapper.toDTO(agendaSaved);
 	}
 
 	/**
@@ -80,7 +83,7 @@ public class AgendaServiceImpl implements AgendaService {
 	public List<AgendaDTO> getAll() {
 		List<Agenda> agendas =  agendaRepository.findAll();
 
-		return AgendaMapper.toDtoList(agendas); 
+		return agendaMapper.toDtoList(agendas); 
 	}
 
 	/**

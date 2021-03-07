@@ -24,6 +24,7 @@ public class AgendaDTO {
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone="GMT-3")
 	private Date expiration;
 	
+	@Builder.Default
 	private List<VoteDTO> votes = new ArrayList<>();
 
 }
