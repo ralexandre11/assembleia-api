@@ -72,5 +72,4 @@ class AgendaControllerTest {
 		Assertions.assertThat(responseDTO.getMessage()).isEqualTo("Opened Session! ID: 1");
 	}
 
-
 }

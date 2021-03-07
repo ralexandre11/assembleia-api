@@ -58,7 +58,7 @@ public class VoteController {
 		
 		service.registerVote(dto);
 		
-		ResponseDTO response = new ResponseDTO("Vote OK!");
+		ResponseDTO response = new ResponseDTO("Vote successfully registered!");
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}

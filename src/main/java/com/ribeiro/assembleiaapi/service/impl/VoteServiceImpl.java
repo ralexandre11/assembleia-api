@@ -2,11 +2,10 @@ package com.ribeiro.assembleiaapi.service.impl;
 
 import java.util.Date;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import com.ribeiro.assembleiaapi.exception.ApiException;
+import com.ribeiro.assembleiaapi.exception.ApiExceptionController;
 import com.ribeiro.assembleiaapi.model.dto.VoteDTO;
 import com.ribeiro.assembleiaapi.model.dto.VoteResultDTO;
 import com.ribeiro.assembleiaapi.model.entity.Agenda;
@@ -19,6 +18,8 @@ import com.ribeiro.assembleiaapi.service.AgendaService;
 import com.ribeiro.assembleiaapi.service.MemberService;
 import com.ribeiro.assembleiaapi.service.VoteService;
 
+import lombok.AllArgsConstructor;
+
 /**
  * Class that implements the Vote service layer
  * @author Ricardo Ribeiro (https://www.linkedin.com/in/ricardoalexandreribeiro/)
@@ -26,16 +27,14 @@ import com.ribeiro.assembleiaapi.service.VoteService;
  *
  */
 @Service
+@AllArgsConstructor
 public class VoteServiceImpl implements VoteService {
 
-	@Autowired
-	private AgendaService agendaService;
+	private final AgendaService agendaService;
 	
-	@Autowired
-	private MemberService memberService;
+	private final MemberService memberService;
 	
-	@Autowired
-	private VoteRepository voteRepository;
+	private final VoteRepository voteRepository;
 		
 	/**
 	 * Method for registering a new Vote by Member and Agenda
@@ -71,7 +70,7 @@ public class VoteServiceImpl implements VoteService {
 	private void isOpenedAgenda(Agenda agenda) {
 		Date date = new Date();
 		if(agenda.getExpiration() == null || agenda.getExpiration().after(date)) {
-			throw new ApiException("Agenda is not Opened!", HttpStatus.BAD_REQUEST);
+			throw new ApiExceptionController("Agenda is not Opened!", HttpStatus.BAD_REQUEST);
 		}
 	}
 
@@ -83,7 +82,7 @@ public class VoteServiceImpl implements VoteService {
 	private Member existCpf(Long cpf) {
 		Member member = memberService.getByCpf(cpf);
 		if (member == null) {
-			throw new ApiException("CPF not exist!", HttpStatus.BAD_REQUEST);
+			throw new ApiExceptionController("CPF not exist!", HttpStatus.BAD_REQUEST);
 		}
 		return member;
 	}
@@ -96,7 +95,7 @@ public class VoteServiceImpl implements VoteService {
 	private void alredyVoteCpfAgenda(Agenda agenda, Member member) {
 		Vote vote = voteRepository.findByAgendaAndMember(agenda, member);
 		if (vote != null) {
-			throw new ApiException("This Member has already voted!", HttpStatus.BAD_REQUEST);
+			throw new ApiExceptionController("This Member has already voted!", HttpStatus.BAD_REQUEST);
 		}
 	}
 }

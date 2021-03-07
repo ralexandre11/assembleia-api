@@ -26,21 +26,24 @@ class AssembleiaApiApplicationTests {
 
 	@Test
 	void givenDescription_whenPostAgenda_thenStatusCreated() {
+		// Given
 		HttpEntity<AgendaAddDTO> request = createRequest();
 
+		// When
 		ResponseEntity<ResponseDTO> response = create(request);
-
+		
+		// Then
 		Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
-	}
-
-	private ResponseEntity<ResponseDTO> create(final HttpEntity<AgendaAddDTO> request) {
-		return restTemplate.postForEntity(getUrl(), request, ResponseDTO.class);
 	}
 
 	private HttpEntity<AgendaAddDTO> createRequest() {
 		return new HttpEntity<AgendaAddDTO>(createPayload());
 	}
 
+	private ResponseEntity<ResponseDTO> create(final HttpEntity<AgendaAddDTO> request) {
+		return restTemplate.postForEntity(getUrl(), request, ResponseDTO.class);
+	}
+	
 	private AgendaAddDTO createPayload() {
 		return new AgendaAddDTO("my description");
 	}
