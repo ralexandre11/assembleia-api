@@ -5,12 +5,10 @@ import java.util.Calendar;
 import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
@@ -31,15 +29,14 @@ import com.ribeiro.assembleiaapi.service.CpfApiService;
 
 @SpringBootTest(classes = AssembleiaApiApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
-@ExtendWith(MockitoExtension.class)
 class AssembleiaApiApplicationTests {
 
 	@LocalServerPort
 	private int port;
 
-	@Mock
-	CpfApiService cpfApiService;
-	
+	@MockBean
+	private CpfApiService cpfApiService;
+
 	@Autowired
 	private TestRestTemplate restTemplate;
 
@@ -70,21 +67,19 @@ class AssembleiaApiApplicationTests {
 	@Test
 	void givenOpenedAgenda_whenVote_thenStatusCreated() {
 		// Given
-		// All this configuration can be done through repositories, however, I chose this way to exercise other endpoints
+		Mockito.when(cpfApiService.checkCpfApi(Mockito.anyLong())).thenReturn(new CpfApiDTO("ABLE_TO_VOTE"));
+		// All this configuration can be done through repositories, however, I chose
+		// this way to exercise other endpoints
 		HttpEntity<AgendaAddDTO> addAgendaRequest = createAddAgendaRequest(StringUtils.repeat("D", 10));
 		ResponseEntity<AgendaDTO> agenda = createAgenda(addAgendaRequest);
 		createMember(createMemberRequest());
 		openSession(agenda.getBody().getId(), createOpenSessionRequest());
 		HttpEntity<VoteDTO> voteRequest = createVoteRequest(agenda.getBody().getId());
-		
-		CpfApiDTO cpfApiDto = new CpfApiDTO("ABLE_TO_VOTE");
-		Mockito.when(cpfApiService.checkCpfApi(Mockito.any())).thenReturn(cpfApiDto);
-		
+
 		// When
 		ResponseEntity<ResponseDTO> response = vote(voteRequest);
 
 		// Then
-		//TODO depends on the return of the cpf validation, can fail sometimes. Need to mock cpf service
 		Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
 	}
 
