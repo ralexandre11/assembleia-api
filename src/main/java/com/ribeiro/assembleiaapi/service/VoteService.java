@@ -9,8 +9,4 @@ public interface VoteService {
 	
 	VoteResultDTO getResultVotes(Long idAgenda);
 	
-//	List<Vote> all();
-//	
-//	Optional<Vote> getByID(Long id);
-	
 }

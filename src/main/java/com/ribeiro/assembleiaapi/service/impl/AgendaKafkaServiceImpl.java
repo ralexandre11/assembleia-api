@@ -28,9 +28,11 @@ public class AgendaKafkaServiceImpl implements AgendaKafkaService {
 		String agendaJson;
 		try {
 			agenda.setVotes(new ArrayList<>());
-			AgendaDTO agendaDto=agendaMapper.toDTO(agenda);
+			AgendaDTO agendaDto = agendaMapper.toDTO(agenda);
 			agendaJson = new ObjectMapper().writeValueAsString(agendaDto);
-			Logger.getLogger(this.getClass().getName()).info("Kafka json:"+agendaJson);
+			
+			Logger.getLogger(this.getClass().getName()).info("Kafka json:" + agendaJson);
+			
 			kafkaTemplate.send("finished-voting",agendaJson);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();

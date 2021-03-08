@@ -11,11 +11,9 @@ import com.ribeiro.assembleiaapi.model.dto.VoteDTO;
 import com.ribeiro.assembleiaapi.model.entity.Agenda;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 
-@AllArgsConstructor
-@Builder
 @Component
+@AllArgsConstructor
 public class AgendaMapper {
 
 	private final VoteMapper voteMapper;
@@ -23,8 +21,6 @@ public class AgendaMapper {
 	public Agenda fromDTO(AgendaAddDTO dto) {
 		Agenda agenda = new Agenda();
 		agenda.setDescription(dto.getDescription());
-		//TODO 
-		//agenda.setExpiration(agendaDTO.getExpiration());
 		return agenda;
 	}
 
@@ -51,5 +47,4 @@ public class AgendaMapper {
 		}
 		return agendaDtos;
 	}
-
 }

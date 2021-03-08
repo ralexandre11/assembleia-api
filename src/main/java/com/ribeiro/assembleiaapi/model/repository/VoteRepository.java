@@ -11,9 +11,6 @@ import com.ribeiro.assembleiaapi.model.enums.VoteEnum;
 
 public interface VoteRepository extends JpaRepository<Vote, Long> {
 
-//    @Query("SELECT * FROM vote v WHERE v.agenda.id_agenda = ?1 AND v.id_member = ?2")
-	// JOIN v.agenda a
-
     Vote findByAgendaAndMember(Agenda agenda, Member member);
 
     @Query("SELECT COUNT(*) "
