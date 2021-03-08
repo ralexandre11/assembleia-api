@@ -13,6 +13,7 @@ import com.ribeiro.assembleiaapi.model.dto.AgendaDTO;
 import com.ribeiro.assembleiaapi.model.entity.Agenda;
 import com.ribeiro.assembleiaapi.model.mappers.AgendaMapper;
 import com.ribeiro.assembleiaapi.model.repository.AgendaRepository;
+import com.ribeiro.assembleiaapi.service.AgendaKafkaService;
 import com.ribeiro.assembleiaapi.service.AgendaService;
 
 import lombok.AllArgsConstructor;
@@ -33,6 +34,8 @@ public class AgendaServiceImpl implements AgendaService {
 	
 	private final AgendaMapper agendaMapper;
 
+	private final AgendaKafkaService agendaKafkaService;
+
 	/**
 	 * Method to create new agenda
 	 * 
@@ -48,6 +51,15 @@ public class AgendaServiceImpl implements AgendaService {
 		Agenda agendaSaved = agendaRepository.save(agenda);
 		
 		return agendaMapper.toDTO(agendaSaved);
+	}
+	
+	@Override
+	@Transactional
+	public void updateFinishedAgenda(Agenda agenda) {
+		agenda.setFinished(true);
+		agendaRepository.save(agenda);
+		
+		agendaKafkaService.send(agenda);
 	}
 
 	/**

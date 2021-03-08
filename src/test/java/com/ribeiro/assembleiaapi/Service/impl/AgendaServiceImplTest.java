@@ -19,6 +19,7 @@ import com.ribeiro.assembleiaapi.model.dto.AgendaDTO;
 import com.ribeiro.assembleiaapi.model.entity.Agenda;
 import com.ribeiro.assembleiaapi.model.mappers.AgendaMapper;
 import com.ribeiro.assembleiaapi.model.repository.AgendaRepository;
+import com.ribeiro.assembleiaapi.service.AgendaKafkaService;
 import com.ribeiro.assembleiaapi.service.impl.AgendaServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
@@ -32,9 +33,12 @@ class AgendaServiceImplTest {
 	@Mock
 	AgendaRepository agendaRepository;
 
+	@Mock
+	AgendaKafkaService agendaKafkaService;
+
 	@BeforeEach
 	void setup() {
-		agendaService = new AgendaServiceImpl(agendaRepository, agendaMapper);
+		agendaService = new AgendaServiceImpl(agendaRepository, agendaMapper, agendaKafkaService);
 	}
 
 	@Test

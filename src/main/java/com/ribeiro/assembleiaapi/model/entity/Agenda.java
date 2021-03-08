@@ -45,7 +45,7 @@ public class Agenda implements Serializable {
 	@Column(name="expiration_date")
 	private Date expiration;
 
-	@Column(name="finished")
+	@Column(name="finished", columnDefinition = "DEFAULT false")
 	private boolean finished;
 	
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)

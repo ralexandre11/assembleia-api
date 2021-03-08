@@ -9,6 +9,8 @@ import com.ribeiro.assembleiaapi.model.entity.Agenda;
 public interface AgendaService {
 
 	AgendaDTO save(AgendaAddDTO dto);
+	
+	void updateFinishedAgenda(Agenda agenda);
 
 	AgendaDTO update(Long id, AgendaDTO dto);
 

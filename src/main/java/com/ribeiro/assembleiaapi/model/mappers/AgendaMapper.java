@@ -11,8 +11,10 @@ import com.ribeiro.assembleiaapi.model.dto.VoteDTO;
 import com.ribeiro.assembleiaapi.model.entity.Agenda;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 
 @AllArgsConstructor
+@Builder
 @Component
 public class AgendaMapper {
 
