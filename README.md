@@ -46,14 +46,14 @@ The purpose of the application is:
 		
 		{
 		  "name": "string",
-		  "cpf": 0
+		  "cpf": "string"
 		}
 		
 * PUT (/member/{id}) - Update an existing Member
 		
 		{
 		  "name": "string",
-		  "cpf": 0
+		  "cpf": "string"
 		}
 
 ### Using the end points: "/agenda/"
@@ -68,26 +68,26 @@ The purpose of the application is:
 		  "description": "string",
 		}
 		
-* PUT (/member/{id}) - Open the agenda session, if the expiration date was informed empty(""), it will be added 01 minute.
+* PUT (/agenda/{id}) - Open the agenda session, if the expiration date was informed empty(""), it will be added 01 minute.
 		
 		{
-		  "expiration": "2021-03-01 15:00:00",
+		  "expiration": "Date Format String",
 		}
+		(Ex: "2021-03-01 15:00:00")
 
 ### Using the end points: "/vote/"
 
 
-* POST (/vote) - Register the member vote
+* POST (/vote) - Validate and Register a member vote
 		
 		{
-		  "description": "string",
+		    "idAgenda": 1,
+		    "cpf": "string",
+		    "voteValue": "NAO"
 		}
 		
-* PUT (/member/{id}) - Open the agenda session, if the expiration date was informed empty(""), it will be added 01 minute.
+* GET (/vote/{id}/result) - Show the result of votes.
 		
-		{
-		  "expiration": "2021-03-01 15:00:00",
-		}
 		
 		
 ## How to develop
@@ -98,8 +98,4 @@ The purpose of the application is:
 		`https://github.com/ralexandre11/assembleia-api`
 
 		`$ cd assembleia-api`
-
-* To buid the image Docker, use the command:
-
-		`$ mvn package`
 
