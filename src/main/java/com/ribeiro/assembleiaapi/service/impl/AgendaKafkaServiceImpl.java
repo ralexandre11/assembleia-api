@@ -33,7 +33,7 @@ public class AgendaKafkaServiceImpl implements AgendaKafkaService {
 			
 			Logger.getLogger(this.getClass().getName()).info("Kafka json:" + agendaJson);
 			
-			kafkaTemplate.send("finished-voting",agendaJson);
+//			kafkaTemplate.send("finished-voting",agendaJson);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
